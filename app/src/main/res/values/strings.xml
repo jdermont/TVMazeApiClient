@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TV Maze Api Client</string>
+    <string name="hint_search_show">Type a show name</string>
 </resources>

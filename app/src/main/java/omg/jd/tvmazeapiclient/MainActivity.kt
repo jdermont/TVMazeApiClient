@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import omg.jd.tvmazeapiclient.components.main.MainFragment
+import omg.jd.tvmazeapiclient.components.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
