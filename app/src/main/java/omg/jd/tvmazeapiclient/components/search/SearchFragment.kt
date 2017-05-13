@@ -8,14 +8,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_search.*
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.ws.model.TVShow
 
 class SearchFragment : Fragment(), MVPSearch.View {
-    private val presenter: MVPSearch.Presenter by lazy { SearchPresenter(this) }
+    private val presenter: MVPSearch.Presenter by lazy {
+        SearchPresenter(this, SearchInteractor())
+    }
 
     val adapter: SearchItemsAdapter = SearchItemsAdapter()
 

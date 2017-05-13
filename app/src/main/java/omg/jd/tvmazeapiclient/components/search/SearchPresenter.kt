@@ -3,8 +3,8 @@ package omg.jd.tvmazeapiclient.components.search
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class SearchPresenter(val view : MVPSearch.View) : MVPSearch.Presenter {
-    val interactor: MVPSearch.Interactor = SearchInteractor()
+class SearchPresenter(val view : MVPSearch.View,
+                      val interactor: MVPSearch.Interactor) : MVPSearch.Presenter {
 
     override fun onSearch(input: String) {
         val text: String = input.trim()
