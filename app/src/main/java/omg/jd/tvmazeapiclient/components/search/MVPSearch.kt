@@ -1,22 +1,22 @@
 package omg.jd.tvmazeapiclient.components.search
 
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.ws.model.TVShow
+import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.mvp.BasePresenter
+import omg.jd.tvmazeapiclient.mvp.BaseView
+import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 
 interface MVPSearch {
     interface Interactor {
-        fun searchShows(input: String): Observable<List<TVShow>>
+        fun searchShows(input: String): Observable<List<WsTVShow>>
     }
 
-    interface Presenter {
-        fun onResume()
-        fun onPause()
-        fun onDestroy()
-
+    interface Presenter : BasePresenter {
         fun onSearch(input: String)
     }
 
-    interface View {
-        fun setShows(shows: List<TVShow>)
+    interface View : BaseView {
+
+        fun setShows(shows: List<TvShow>)
     }
 }

@@ -2,8 +2,8 @@ package omg.jd.tvmazeapiclient.ws
 
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.ws.model.Links
-import omg.jd.tvmazeapiclient.ws.model.TVShow
+import omg.jd.tvmazeapiclient.ws.model.WsLinks
+import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 import omg.jd.tvmazeapiclient.ws.model.deserializers.LinksDeserializer
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -16,7 +16,7 @@ object ApiClient {
 
     init {
         val gsonBuilder = GsonBuilder()
-        gsonBuilder.registerTypeAdapter(Links::class.java, LinksDeserializer())
+        gsonBuilder.registerTypeAdapter(WsLinks::class.java, LinksDeserializer())
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -28,7 +28,7 @@ object ApiClient {
         apiInterface = retrofit.create(ApiInterface::class.java)
     }
 
-    fun retrieveTVShows(shows : String) : Observable<List<TVShow>> {
+    fun retrieveTVShows(shows : String) : Observable<List<WsTVShow>> {
         return apiInterface.getTVShows(shows)
     }
 }

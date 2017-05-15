@@ -2,6 +2,8 @@ package omg.jd.tvmazeapiclient.components.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.Loader
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,14 +13,24 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search.*
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
-import omg.jd.tvmazeapiclient.ws.model.TVShow
+import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 
-class SearchFragment : Fragment(), MVPSearch.View {
-    private val presenter: MVPSearch.Presenter by lazy {
-        SearchPresenter(this, SearchInteractor())
+
+
+class SearchFragment : Fragment(), LoaderManager.LoaderCallbacks<MVPSearch.Presenter>, MVPSearch.View {
+    companion object {
+        const val LOADER_ID: Int = 109
     }
 
+    var presenter: MVPSearch.Presenter? = null
+
     val adapter: SearchItemsAdapter = SearchItemsAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity.supportLoaderManager.initLoader(LOADER_ID, null, this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -30,39 +42,53 @@ class SearchFragment : Fragment(), MVPSearch.View {
     }
 
     private fun initViews() {
-        searchEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+        searchEditText.post { // workaround so it wont be triggered after orientation change
+            searchEditText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
 
-            }
+                }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
+                }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                presenter.onSearch(s.toString())
-            }
-        })
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter?.onSearch(s.toString())
+                }
+            })
+        }
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = adapter
     }
 
+    override fun onLoadFinished(loader: Loader<MVPSearch.Presenter>?, presenter: MVPSearch.Presenter?) {
+        this.presenter = presenter
+    }
+
+    override fun onLoaderReset(loader: Loader<MVPSearch.Presenter>?) {
+        presenter = null
+    }
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPSearch.Presenter> {
+        return PresenterLoader(context, SearchPresenterFactory())
+    }
+
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
+        presenter?.onViewAttached(this)
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.onPause()
+        presenter?.onViewDetached()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
+        presenter?.onDestroyed()
     }
 
-    override fun setShows(shows: List<TVShow>) {
+    override fun setShows(shows: List<TvShow>) {
         adapter.updateList(shows)
     }
 

@@ -1,9 +1,9 @@
 package omg.jd.tvmazeapiclient.components.search
 
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.toObservable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
-import omg.jd.tvmazeapiclient.ws.model.TVShow
+import omg.jd.tvmazeapiclient.utils.convertToTvShow
+import omg.jd.tvmazeapiclient.utils.createShowList
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +33,8 @@ class SearchPresenterTest {
 
     @Before
     fun setUp() {
-        presenter = SearchPresenter(view,interactor)
+        presenter = SearchPresenter(interactor)
+        presenter.onViewAttached(view)
     }
 
     @Test
@@ -41,19 +42,12 @@ class SearchPresenterTest {
         val showList = createShowList()
         val searchText = "search string"
         val observable = Observable
-                .fromIterable(showList)
-                .toList()
-                .toObservable()
+                .fromArray(showList)
         `when`(interactor.searchShows(searchText)).thenReturn(observable)
 
         presenter.onSearch(searchText)
 
         verify(interactor).searchShows(searchText)
-        verify(view).setShows(showList)
-    }
-
-    private fun createShowList(): List<TVShow> {
-        val tvShow = TVShow(0.0,null)
-        return listOf(tvShow)
+        verify(view).setShows(showList.map { it.show.convertToTvShow() })
     }
 }

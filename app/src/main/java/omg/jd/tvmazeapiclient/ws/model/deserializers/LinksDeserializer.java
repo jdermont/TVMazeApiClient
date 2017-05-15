@@ -8,11 +8,11 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-import omg.jd.tvmazeapiclient.ws.model.Links;
+import omg.jd.tvmazeapiclient.ws.model.WsLinks;
 
-public class LinksDeserializer implements JsonDeserializer<Links> {
+public class LinksDeserializer implements JsonDeserializer<WsLinks> {
     @Override
-    public Links deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public WsLinks deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String self = null;
         String previousepisode = null;
         String nextepisode = null;
@@ -28,6 +28,6 @@ public class LinksDeserializer implements JsonDeserializer<Links> {
             nextepisode = ((JsonObject)rootObject.get("nextepisode")).get("href").getAsString();
         }
 
-        return new Links(self,previousepisode,nextepisode);
+        return new WsLinks(self,previousepisode,nextepisode);
     }
 }

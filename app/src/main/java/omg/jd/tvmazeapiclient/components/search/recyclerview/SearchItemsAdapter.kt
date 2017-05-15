@@ -4,11 +4,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.ws.model.TVShow
+import omg.jd.tvmazeapiclient.db.model.TvShow
 
 class SearchItemsAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 
-    val showList: ArrayList<TVShow> = ArrayList()
+    val showList: ArrayList<TvShow> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SearchItemViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.search_item, parent, false)
@@ -23,7 +23,7 @@ class SearchItemsAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
         return showList.size
     }
 
-    fun updateList(showList: List<TVShow>) {
+    fun updateList(showList: List<TvShow>) {
         this.showList.clear()
         this.showList.addAll(showList)
         notifyDataSetChanged()
