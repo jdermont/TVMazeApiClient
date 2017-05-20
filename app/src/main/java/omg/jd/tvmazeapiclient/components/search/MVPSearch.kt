@@ -16,7 +16,8 @@ interface MVPSearch {
     }
 
     interface View : BaseView {
-
+        fun setLoading()
+        fun setEmpty()
         fun setShows(shows: List<TvShow>)
     }
 }

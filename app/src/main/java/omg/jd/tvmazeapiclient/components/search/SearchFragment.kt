@@ -10,15 +10,17 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.fragment_search.*
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
-
+import omg.jd.tvmazeapiclient.utils.VerticalSpaceItemDecoration
 
 
 class SearchFragment : Fragment(), LoaderManager.LoaderCallbacks<MVPSearch.Presenter>, MVPSearch.View {
+
     companion object {
         const val LOADER_ID: Int = 109
     }
@@ -90,6 +92,19 @@ class SearchFragment : Fragment(), LoaderManager.LoaderCallbacks<MVPSearch.Prese
 
     override fun setShows(shows: List<TvShow>) {
         adapter.updateList(shows)
+        if (shows.isEmpty()) {
+            setEmpty()
+        } else {
+            searchMultiStateView.viewState = MultiStateView.VIEW_STATE_CONTENT
+        }
+    }
+
+    override fun setLoading() {
+        searchMultiStateView.viewState = MultiStateView.VIEW_STATE_LOADING
+    }
+
+    override fun setEmpty() {
+        searchMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
     }
 
 }
