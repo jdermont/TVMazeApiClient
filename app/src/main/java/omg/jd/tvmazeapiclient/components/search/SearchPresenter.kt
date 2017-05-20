@@ -8,29 +8,11 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
 
     var view: MVPSearch.View? = null
 
-    var lastSearchText: String = ""
-
     override fun onSearch(input: String) {
-        lastSearchText = input.trim()
+        val searchQuery: String = input.trim()
+
         view?.setLoading()
-        retrieveTvShows()
-    }
-
-    override fun onViewAttached(view: BaseView) {
-        this.view = view as MVPSearch.View
-        retrieveTvShows()
-    }
-
-    override fun onViewDetached() {
-        this.view = null
-    }
-
-    override fun onDestroyed() {
-        this.view = null
-    }
-
-    private fun retrieveTvShows() {
-        interactor.searchShows(lastSearchText)
+        interactor.searchShows(searchQuery)
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMapIterable { it }
                 .map { it.show.convertToTvShow() }
@@ -40,4 +22,15 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
                 }
     }
 
+    override fun onViewAttached(view: BaseView) {
+        this.view = view as MVPSearch.View
+    }
+
+    override fun onViewDetached() {
+        this.view = null
+    }
+
+    override fun onDestroyed() {
+        this.view = null
+    }
 }

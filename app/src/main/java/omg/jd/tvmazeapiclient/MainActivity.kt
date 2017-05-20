@@ -1,5 +1,6 @@
 package omg.jd.tvmazeapiclient
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import omg.jd.tvmazeapiclient.components.main.MainFragment
+import omg.jd.tvmazeapiclient.components.search.SearchActivity
 import omg.jd.tvmazeapiclient.components.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +19,9 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
-//        ApiClient.retrieveTVShows("theory")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe {
-//                    Log.d("MainActivity",it.toString())
-//                }
+        val intent = Intent(this,SearchActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun initViews() {
