@@ -25,6 +25,10 @@
             android:name=".components.search.SearchActivity"
             android:label="@string/title_activity_search">
         </activity>
+        <activity
+            android:name=".components.details.DetailsActivity"
+            android:theme="@style/AppThemeDetails">
+        </activity>
     </application>
 
 </manifest>

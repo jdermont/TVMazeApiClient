@@ -2,31 +2,30 @@ package omg.jd.tvmazeapiclient.components.search
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
-import android.text.Editable
-import android.text.TextWatcher
+import android.support.v7.widget.*
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import com.kennyc.view.MultiStateView
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.activity_search.*
 import omg.jd.tvmazeapiclient.R
+import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
-import android.support.v4.widget.SearchViewCompat.setOnQueryTextListener
-import android.view.MenuItem
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.support.v4.widget.SearchViewCompat.setOnQueryTextListener
-import android.support.v4.widget.SearchViewCompat.setSearchableInfo
-import android.util.Log
+import android.support.v4.app.ActivityOptionsCompat
+import omg.jd.tvmazeapiclient.components.details.DetailsActivity
+import android.content.Intent
+import android.view.View
 
 
-class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.LoaderCallbacks<MVPSearch.Presenter> {
+class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.LoaderCallbacks<MVPSearch.Presenter>,
+        SearchItemsAdapter.ViewHolderOnClickListener {
 
     companion object {
         const val LOADER_ID: Int = 109
@@ -35,7 +34,7 @@ class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.Loader
 
     var presenter: MVPSearch.Presenter? = null
 
-    val adapter: SearchItemsAdapter = SearchItemsAdapter()
+    val adapter: SearchItemsAdapter = SearchItemsAdapter(this)
 
     var searchText: String = ""
     var searchView: SearchView? = null
@@ -70,11 +69,10 @@ class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.Loader
     }
 
     private fun initViews() {
-
-        searchRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        val colspan: Int = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2
+        searchRecyclerView.layoutManager = StaggeredGridLayoutManager(colspan,StaggeredGridLayoutManager.VERTICAL)
         searchRecyclerView.adapter = adapter
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
@@ -151,6 +149,16 @@ class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.Loader
 
     override fun onLoaderReset(loader: Loader<MVPSearch.Presenter>?) {
         presenter = null
+    }
+
+    override fun onClick(viewHolder: SearchItemViewHolder) {
+        val tvShow: TvShow = viewHolder.data as TvShow
+        val transitedView: View = viewHolder.transitedView
+
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, tvShow.originalImage)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
+        startActivity(intent, options.toBundle())
     }
 
 }

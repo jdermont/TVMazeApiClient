@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.db.model.TvShow
 
-class SearchItemsAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
+class SearchItemsAdapter(val clickListener: ViewHolderOnClickListener?) : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     val showList: ArrayList<TvShow> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SearchItemViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.search_item, parent, false)
-        return SearchItemViewHolder(view)
+        return SearchItemViewHolder(view, clickListener)
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder?, position: Int) {
@@ -27,5 +27,9 @@ class SearchItemsAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
         this.showList.clear()
         this.showList.addAll(showList)
         notifyDataSetChanged()
+    }
+
+    interface ViewHolderOnClickListener {
+        fun onClick(viewHolder: SearchItemViewHolder)
     }
 }
