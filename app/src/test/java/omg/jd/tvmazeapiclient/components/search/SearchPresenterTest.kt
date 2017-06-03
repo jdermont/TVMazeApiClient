@@ -1,8 +1,12 @@
 package omg.jd.tvmazeapiclient.components.search
 
+import android.view.View
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
+import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
+import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.utils.convertToTvShow
+import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
 import org.junit.Before
 import org.junit.Rule
@@ -10,8 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -49,5 +52,16 @@ class SearchPresenterTest {
 
         verify(interactor).searchShows(searchText)
         verify(view).setShows(showList.map { it.show.convertToTvShow() })
+    }
+
+    @Test
+    fun testOnItemClick() {
+        val viewHolder = mock(SearchItemViewHolder::class.java)
+        `when`(viewHolder.data).thenReturn(createShow().convertToTvShow())
+        `when`(viewHolder.transitedView).thenReturn(mock(View::class.java))
+
+        presenter.onItemClick(viewHolder)
+
+        verify(view).showDetails(viewHolder.data as TvShow, viewHolder.transitedView)
     }
 }

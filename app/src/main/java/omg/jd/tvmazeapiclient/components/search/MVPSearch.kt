@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.components.search
 
 import io.reactivex.Observable
+import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.BasePresenter
 import omg.jd.tvmazeapiclient.mvp.BaseView
@@ -13,11 +14,13 @@ interface MVPSearch {
 
     interface Presenter : BasePresenter<View> {
         fun onSearch(input: String)
+        fun onItemClick(viewHolder: SearchItemViewHolder)
     }
 
     interface View : BaseView {
         fun setLoading()
         fun setEmpty()
         fun setShows(shows: List<TvShow>)
+        fun showDetails(show: TvShow, transitedView: android.view.View)
     }
 }

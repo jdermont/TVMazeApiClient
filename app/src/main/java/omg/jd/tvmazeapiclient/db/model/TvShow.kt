@@ -1,5 +1,10 @@
 package omg.jd.tvmazeapiclient.db.model
 
+import android.os.Parcel
+import android.os.Parcelable
+import paperparcel.PaperParcel
+
+@PaperParcel
 data class TvShow(val id: Long = 0,
                   val url : String?,
                   val name : String?,
@@ -18,4 +23,16 @@ data class TvShow(val id: Long = 0,
                   val originalImage: String?,
                   val summary : String?,
                   val updated : Long = 0,
-                  val links : Links?)
+                  val links : Links?) : Parcelable {
+
+    companion object {
+        @JvmField val CREATOR = PaperParcelTvShow.CREATOR
+    }
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        PaperParcelTvShow.writeToParcel(this, dest, flags)
+    }
+
+}

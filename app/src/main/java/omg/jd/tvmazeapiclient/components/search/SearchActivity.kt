@@ -143,11 +143,12 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
     }
 
     override fun onClick(viewHolder: SearchItemViewHolder) {
-        val tvShow: TvShow = viewHolder.data as TvShow
-        val transitedView: View = viewHolder.transitedView
+        presenter?.onItemClick(viewHolder)
+    }
 
+    override fun showDetails(show: TvShow, transitedView: View) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, tvShow.originalImage)
+        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, show)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
         startActivity(intent, options.toBundle())
     }

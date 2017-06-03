@@ -5,6 +5,7 @@ import android.support.v4.content.Loader
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
+import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.loadUrl
 
@@ -19,7 +20,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        detailsShowImage.loadUrl(intent.extras.getString(EXTRA_TVSHOW), R.drawable.placeholder)
+        detailsShowImage.loadUrl(intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW).originalImage, R.drawable.placeholder)
     }
 
     override fun onBackPressed() {
