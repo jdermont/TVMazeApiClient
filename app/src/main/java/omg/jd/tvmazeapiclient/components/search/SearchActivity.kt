@@ -2,26 +2,27 @@ package omg.jd.tvmazeapiclient.components.search
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
 import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_search.*
 import omg.jd.tvmazeapiclient.R
+import omg.jd.tvmazeapiclient.components.details.DetailsActivity
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
-import android.support.v4.app.ActivityOptionsCompat
-import omg.jd.tvmazeapiclient.components.details.DetailsActivity
-import android.content.Intent
-import android.view.View
 
 
 class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.LoaderCallbacks<MVPSearch.Presenter>,
@@ -83,9 +84,9 @@ class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.Loader
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(this.componentName))
         searchView?.setOnQueryTextListener(queryTextListener)
         if (!searchText.isEmpty()) {
+            searchView?.setQuery(searchText, false)
             searchItem.expandActionView()
         }
-        searchView?.setQuery(searchText, false)
 
         return super.onCreateOptionsMenu(menu)
     }
