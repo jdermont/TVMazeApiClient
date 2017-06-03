@@ -6,9 +6,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.Toolbar
@@ -17,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_search.*
+import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.details.DetailsActivity
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
@@ -25,15 +24,14 @@ import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 
 
-class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.LoaderCallbacks<MVPSearch.Presenter>,
+class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPSearch.View,
         SearchItemsAdapter.ViewHolderOnClickListener {
 
     companion object {
-        const val LOADER_ID: Int = 109
         const val SEARCH_TEXT_KEY = "SEARCH_TEXT_KEY"
     }
 
-    var presenter: MVPSearch.Presenter? = null
+    override var presenter: MVPSearch.Presenter? = null
 
     val adapter: SearchItemsAdapter = SearchItemsAdapter(this)
 
@@ -142,14 +140,6 @@ class SearchActivity : AppCompatActivity(), MVPSearch.View, LoaderManager.Loader
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPSearch.Presenter> {
         return PresenterLoader(applicationContext, SearchPresenterFactory())
-    }
-
-    override fun onLoadFinished(loader: Loader<MVPSearch.Presenter>?, presenter: MVPSearch.Presenter?) {
-        this.presenter = presenter
-    }
-
-    override fun onLoaderReset(loader: Loader<MVPSearch.Presenter>?) {
-        presenter = null
     }
 
     override fun onClick(viewHolder: SearchItemViewHolder) {

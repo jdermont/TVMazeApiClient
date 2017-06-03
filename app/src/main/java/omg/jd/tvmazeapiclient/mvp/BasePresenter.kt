@@ -1,8 +1,18 @@
 package omg.jd.tvmazeapiclient.mvp
 
 
-interface BasePresenter {
-    fun onViewAttached(view: BaseView)
-    fun onViewDetached()
-    fun onDestroyed()
+interface BasePresenter<T : BaseView> {
+    var view : T?
+
+    fun onViewAttached(view: T) {
+        this.view = view
+    }
+
+    fun onViewDetached() {
+        this.view = null
+    }
+
+    fun onDestroyed() {
+        this.view = null
+    }
 }

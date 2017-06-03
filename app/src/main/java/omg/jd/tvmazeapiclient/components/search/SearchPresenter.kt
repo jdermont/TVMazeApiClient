@@ -6,7 +6,7 @@ import omg.jd.tvmazeapiclient.utils.convertToTvShow
 
 class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presenter {
 
-    var view: MVPSearch.View? = null
+    override var view: MVPSearch.View? = null
 
     override fun onSearch(input: String) {
         val searchQuery: String = input.trim()
@@ -22,15 +22,5 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
                 }
     }
 
-    override fun onViewAttached(view: BaseView) {
-        this.view = view as MVPSearch.View
-    }
 
-    override fun onViewDetached() {
-        this.view = null
-    }
-
-    override fun onDestroyed() {
-        this.view = null
-    }
 }

@@ -11,7 +11,7 @@ interface MVPSearch {
         fun searchShows(input: String): Observable<List<WsTVShow>>
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter : BasePresenter<View> {
         fun onSearch(input: String)
     }
 

@@ -8,7 +8,7 @@ interface MVPDetails {
 
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter : BasePresenter<View> {
 
     }
 
