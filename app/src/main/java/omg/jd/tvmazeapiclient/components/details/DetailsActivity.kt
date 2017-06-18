@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.components.details
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.v4.content.Loader
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
@@ -20,6 +21,29 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+        setSupportActionBar(detailsToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayUseLogoEnabled(false)
+
+        detailsAppBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            internal var isShow = false
+            internal var scrollRange = -1
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+
+                if (scrollRange + verticalOffset <= 64) {
+                    detailsCollapsingToolbarLayout.title = "Title"
+                    isShow = true
+                } else if (isShow) {
+                    detailsCollapsingToolbarLayout.title = " "
+                    isShow = false
+                }
+            }
+        })
+
         detailsShowImage.loadUrl(intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW).originalImage, R.drawable.placeholder)
     }
 

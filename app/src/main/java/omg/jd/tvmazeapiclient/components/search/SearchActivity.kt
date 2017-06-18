@@ -54,8 +54,7 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(searchToolbar)
 
         supportLoaderManager.initLoader(LOADER_ID, null, this)
 
