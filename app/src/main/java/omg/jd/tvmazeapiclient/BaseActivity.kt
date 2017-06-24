@@ -8,7 +8,6 @@ import omg.jd.tvmazeapiclient.mvp.BasePresenter
 import omg.jd.tvmazeapiclient.mvp.BaseView
 
 abstract class BaseActivity<V : BaseView, P : BasePresenter<V>> : AppCompatActivity(), LoaderManager.LoaderCallbacks<P> {
-
     companion object {
         val LOADER_ID = this::class.java.name.hashCode()
     }
@@ -17,17 +16,21 @@ abstract class BaseActivity<V : BaseView, P : BasePresenter<V>> : AppCompatActiv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         supportLoaderManager.initLoader(LOADER_ID, null, this)
     }
 
     override fun onLoadFinished(loader: Loader<P>?, presenter: P) {
         this.presenter = presenter
+        presenter.onViewAttached(this as V)
     }
 
     override fun onLoaderReset(loader: Loader<P>?) {
         presenter = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDestroyed()
+    }
 
 }

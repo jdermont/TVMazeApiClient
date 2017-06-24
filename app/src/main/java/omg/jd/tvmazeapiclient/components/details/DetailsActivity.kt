@@ -11,12 +11,12 @@ import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.loadUrl
 
 class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), MVPDetails.View {
-
     companion object {
         const val EXTRA_TVSHOW = "EXTRA_TVSHOW"
     }
 
     override var presenter: MVPDetails.Presenter? = null
+    lateinit var tvShow: TvShow
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
             }
         })
 
-        detailsShowImage.loadUrl(intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW).originalImage, R.drawable.placeholder)
+        tvShow = intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW)
     }
 
     override fun onBackPressed() {
@@ -55,4 +55,12 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         return PresenterLoader(applicationContext, DetailsPresenterFactory())
     }
 
+    override fun onLoadFinished(loader: Loader<MVPDetails.Presenter>?, presenter: MVPDetails.Presenter) {
+        super.onLoadFinished(loader, presenter)
+        presenter.onInit(tvShow)
+    }
+
+    override fun loadImageHeader(imageUrl: String?) {
+        detailsShowImage.loadUrl(imageUrl, R.drawable.placeholder)
+    }
 }

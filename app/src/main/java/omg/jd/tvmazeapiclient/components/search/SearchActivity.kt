@@ -100,21 +100,6 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter?.onViewAttached(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter?.onViewDetached()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.onDestroyed()
-    }
-
     override fun onSaveInstanceState(outState: Bundle?) {
         outState?.putString(SEARCH_TEXT_KEY, searchText)
         super.onSaveInstanceState(outState)
