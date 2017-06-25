@@ -8,6 +8,7 @@ import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
+import omg.jd.tvmazeapiclient.utils.ScreenHelper.ToolbarState
 import omg.jd.tvmazeapiclient.utils.loadUrl
 
 class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), MVPDetails.View {
@@ -26,12 +27,30 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         supportActionBar?.setDisplayUseLogoEnabled(false)
 
         detailsAppBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+
+            internal var state = ToolbarState.IDLE
             internal var isShow = false
             internal var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.totalScrollRange
+                }
+
+                if (verticalOffset == 0) {
+                    if (state != ToolbarState.EXPANDED) {
+                        detailsShowImage.transitionName = getString(R.string.transition_image)
+                        state = ToolbarState.EXPANDED
+                    }
+                } else if (verticalOffset + scrollRange == 0) {
+                    if (state != ToolbarState.COLLAPSED) {
+                        detailsShowImage.transitionName = ""
+                        state = ToolbarState.COLLAPSED
+                    }
+                } else {
+                    if (state != ToolbarState.IDLE) {
+                        state = ToolbarState.IDLE
+                    }
                 }
 
                 if (scrollRange + verticalOffset <= 64) {
@@ -48,7 +67,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     }
 
     override fun onBackPressed() {
-        supportFinishAfterTransition()
+        super.onBackPressed()
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPDetails.Presenter> {

@@ -6,6 +6,7 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
     override var view: MVPDetails.View? = null
 
     override fun onInit(tvShow: TvShow) {
+        interactor.tvShow = tvShow
         view?.loadImageHeader(tvShow.originalImage)
     }
 }

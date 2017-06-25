@@ -2,12 +2,13 @@ package omg.jd.tvmazeapiclient.utils
 
 import android.support.annotation.IntegerRes
 import android.widget.ImageView
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 fun ImageView.loadUrl(url: String?, @IntegerRes placeholderId: Int = 0) {
+    url ?: return
     if (placeholderId != 0) {
-        Glide.with(context).load(url).placeholder(placeholderId).into(this)
+        Picasso.with(context).load(url).placeholder(placeholderId).into(this)
     } else {
-        Glide.with(context).load(url).into(this)
+        Picasso.with(context).load(url).into(this)
     }
 }

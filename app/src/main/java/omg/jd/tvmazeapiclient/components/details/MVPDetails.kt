@@ -6,7 +6,7 @@ import omg.jd.tvmazeapiclient.mvp.BaseView
 
 interface MVPDetails {
     interface Interactor {
-
+        var tvShow: TvShow
     }
 
     interface Presenter : BasePresenter<View> {
