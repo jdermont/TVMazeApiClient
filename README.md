@@ -12,4 +12,4 @@ Plans:
 * usage of CoordinatorLayout
 * DBFlow for database
 
-[![screen](readme/screenshot.png = 640x360)](https://github.com/jdermont/TVMazeApiClient/blob/master/readme/video.mp4)
+[![screen](readme/screenshot.png =640x360)](https://github.com/jdermont/TVMazeApiClient/blob/master/readme/video.mp4)
