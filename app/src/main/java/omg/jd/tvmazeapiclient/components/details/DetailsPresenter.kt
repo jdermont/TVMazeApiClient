@@ -8,5 +8,6 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
     override fun onInit(tvShow: TvShow) {
         interactor.tvShow = tvShow
         view?.loadImageHeader(tvShow.originalImage)
+        view?.setupViews(tvShow)
     }
 }

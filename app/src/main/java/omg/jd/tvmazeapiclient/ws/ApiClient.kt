@@ -3,6 +3,7 @@ package omg.jd.tvmazeapiclient.ws
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.ws.model.WsLinks
+import omg.jd.tvmazeapiclient.ws.model.WsShow
 import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 import omg.jd.tvmazeapiclient.ws.model.deserializers.LinksDeserializer
 import retrofit2.Retrofit
@@ -30,5 +31,9 @@ object ApiClient {
 
     fun retrieveTVShows(shows : String) : Observable<List<WsTVShow>> {
         return apiInterface.getTVShows(shows)
+    }
+
+    fun retrieveTVShow(id : String): Observable<WsShow> {
+        return apiInterface.getTVShow(id)
     }
 }

@@ -3,13 +3,17 @@ package omg.jd.tvmazeapiclient.components.details
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.Loader
+import android.util.Log
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.ScreenHelper.ToolbarState
+import omg.jd.tvmazeapiclient.utils.StringUtils
 import omg.jd.tvmazeapiclient.utils.loadUrl
+import omg.jd.tvmazeapiclient.ws.ApiClient
 
 class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), MVPDetails.View {
     companion object {
@@ -23,13 +27,21 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
         setSupportActionBar(detailsToolbar)
+
+        tvShow = intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW)
+
+        initToolbar()
+        initViews()
+    }
+
+    private fun initToolbar() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayUseLogoEnabled(false)
+    }
 
+    private fun initViews() {
         detailsAppBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-
             internal var state = ToolbarState.IDLE
-            internal var isShow = false
             internal var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -40,30 +52,23 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
                 if (verticalOffset == 0) {
                     if (state != ToolbarState.EXPANDED) {
                         detailsShowImage.transitionName = getString(R.string.transition_image)
+                        detailsCollapsingToolbarLayout.title = " "
                         state = ToolbarState.EXPANDED
                     }
                 } else if (verticalOffset + scrollRange == 0) {
                     if (state != ToolbarState.COLLAPSED) {
                         detailsShowImage.transitionName = ""
+                        detailsCollapsingToolbarLayout.title = tvShow.name
                         state = ToolbarState.COLLAPSED
                     }
                 } else {
                     if (state != ToolbarState.IDLE) {
+                        detailsCollapsingToolbarLayout.title = " "
                         state = ToolbarState.IDLE
                     }
                 }
-
-                if (scrollRange + verticalOffset <= 64) {
-                    detailsCollapsingToolbarLayout.title = "Title"
-                    isShow = true
-                } else if (isShow) {
-                    detailsCollapsingToolbarLayout.title = " "
-                    isShow = false
-                }
             }
         })
-
-        tvShow = intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW)
     }
 
     override fun onBackPressed() {
@@ -81,5 +86,15 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
 
     override fun loadImageHeader(imageUrl: String?) {
         detailsShowImage.loadUrl(imageUrl, R.drawable.placeholder)
+    }
+
+    override fun setupViews(tvShow: TvShow) {
+        val detailsString = "${tvShow.premiered ?: "-"}\n${tvShow.type ?: "-"}\n${tvShow.status ?: "-"}\n${tvShow.rating}"
+        detailsDescriptionText.text = detailsString
+        detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
+
+        ApiClient.retrieveTVShow(tvShow.id.toString())
+                .subscribeOn(Schedulers.io())
+                .subscribe { Log.d("XXX",it.toString()) }
     }
 }

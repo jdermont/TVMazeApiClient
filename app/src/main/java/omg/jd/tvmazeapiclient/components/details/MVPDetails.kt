@@ -15,5 +15,6 @@ interface MVPDetails {
 
     interface View : BaseView {
         fun loadImageHeader(imageUrl: String?)
+        fun setupViews(tvShow: TvShow)
     }
 }
