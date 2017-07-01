@@ -3,17 +3,15 @@ package omg.jd.tvmazeapiclient.components.details
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.Loader
-import android.util.Log
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
+import omg.jd.tvmazeapiclient.db.model.Episode
 import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.ScreenHelper.ToolbarState
 import omg.jd.tvmazeapiclient.utils.StringUtils
 import omg.jd.tvmazeapiclient.utils.loadUrl
-import omg.jd.tvmazeapiclient.ws.ApiClient
 
 class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), MVPDetails.View {
     companion object {
@@ -92,9 +90,15 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         val detailsString = "${tvShow.premiered ?: "-"}\n${tvShow.type ?: "-"}\n${tvShow.status ?: "-"}\n${tvShow.rating}"
         detailsDescriptionText.text = detailsString
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
+    }
 
-        ApiClient.retrieveTVShow(tvShow.id.toString())
-                .subscribeOn(Schedulers.io())
-                .subscribe { Log.d("XXX",it.toString()) }
+    override fun setupEpisodes(latestEpisode: Episode?, nextEpisode: Episode?) {
+        val latestString =
+                if (latestEpisode == null) ""
+                else "${StringUtils.startPadZero(latestEpisode.season)}x${StringUtils.startPadZero(latestEpisode.number)}"
+        val nextString =
+                if (nextEpisode == null) ""
+                else "${StringUtils.startPadZero(nextEpisode.season)}x${StringUtils.startPadZero(nextEpisode.number)}"
+        detailsEpisodesText.text = latestString+"\n"+nextString
     }
 }

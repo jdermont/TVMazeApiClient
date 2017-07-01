@@ -8,4 +8,5 @@
     <string name="transition_image">tvShowImage</string>
     <string name="summary">Summary:</string>
     <string name="details_text">Premiered:\nType:\nStatus:\nRating:</string>
+    <string name="latest_next_episode">Latest episode:\nNext episode:</string>
 </resources>

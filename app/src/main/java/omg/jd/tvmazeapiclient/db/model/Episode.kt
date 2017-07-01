@@ -2,6 +2,8 @@ package omg.jd.tvmazeapiclient.db.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import omg.jd.tvmazeapiclient.utils.DateTimeUtils
+import org.joda.time.DateTime
 import paperparcel.PaperParcel
 
 @PaperParcel
@@ -9,7 +11,7 @@ data class Episode(val id: Long = 0,
                    val url: String?,
                    val name: String?,
                    val season: Int = 0,
-                   val episode: Int = 0,
+                   val number: Int = 0,
                    val airdate: String?,
                    val airtime: String?,
                    val airstamp: String?,
@@ -22,6 +24,8 @@ data class Episode(val id: Long = 0,
     companion object {
         @JvmField val CREATOR = PaperParcelEpisode.CREATOR
     }
+
+    @delegate:Transient val datetime: DateTime by lazy { DateTimeUtils.getEpisodeDateTime(airstamp) }
 
     override fun describeContents() = 0
 

@@ -24,7 +24,7 @@ data class TvShow(val id: Long = 0,
                   val summary: String?,
                   val updated: Long = 0,
                   val links: Links?,
-                  val episodes: List<Episode>) : Parcelable {
+                  var episodes: List<Episode>) : Parcelable {
 
     companion object {
         @JvmField val CREATOR = PaperParcelTvShow.CREATOR

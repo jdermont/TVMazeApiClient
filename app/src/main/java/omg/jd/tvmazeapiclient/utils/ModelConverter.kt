@@ -48,13 +48,13 @@ fun WsEpisode.convertToEpisode(): Episode {
             url = this.url,
             name = this.name,
             season = this.season,
-            episode = this.episode,
+            number = this.number,
             airdate = this.airdate,
             airtime = this.airtime,
             airstamp = this.airstamp,
             runtime = this.runtime,
-            mediumImage = this.Image?.medium,
-            originalImage = this.Image?.original,
+            mediumImage = this.image?.medium,
+            originalImage = this.image?.original,
             summary = this.summary,
             links = this.links?.convertToLinks())
 }

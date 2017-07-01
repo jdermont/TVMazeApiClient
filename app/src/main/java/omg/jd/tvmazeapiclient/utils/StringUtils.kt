@@ -1,10 +1,10 @@
 package omg.jd.tvmazeapiclient.utils
 
-import android.text.Spanned
 import android.text.Html
+import android.text.Spanned
 
 object StringUtils {
-    @SuppressWarnings("deprecation")
+    @Suppress("deprecation")
     fun fromHtmlCompat(html: String?): Spanned {
         val result: Spanned
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -13,5 +13,9 @@ object StringUtils {
             result = Html.fromHtml(html)
         }
         return result
+    }
+
+    fun startPadZero(number: Int): String {
+        return number.toString().padStart(2,'0')
     }
 }

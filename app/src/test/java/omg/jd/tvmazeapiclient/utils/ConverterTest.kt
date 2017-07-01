@@ -1,7 +1,9 @@
 package omg.jd.tvmazeapiclient.utils
 
+import omg.jd.tvmazeapiclient.db.model.Episode
 import omg.jd.tvmazeapiclient.db.model.Links
 import omg.jd.tvmazeapiclient.db.model.Network
+import omg.jd.tvmazeapiclient.ws.model.WsEpisode
 import omg.jd.tvmazeapiclient.ws.model.WsLinks
 import omg.jd.tvmazeapiclient.ws.model.WsNetwork
 import org.junit.Assert
@@ -11,7 +13,7 @@ class ConverterTest {
 
     @Test
     fun convertWsTVShowToTvShowTest() {
-        val wsTVShow = createShow(0, "some show")
+        val wsTVShow = createShowWithEpisodes(0, "some show")
         val tvShow = wsTVShow.convertToTvShow()
 
         Assert.assertEquals(wsTVShow.id, tvShow.id)
@@ -34,6 +36,9 @@ class ConverterTest {
         Assert.assertEquals(wsTVShow.summary, tvShow.summary)
         Assert.assertEquals(wsTVShow.updated, tvShow.updated)
         assertLinksEquals(wsTVShow.links!!, tvShow.links!!)
+        for (i in 0..wsTVShow.embedded?.episodes!!.size-1) {
+            assertEpisodeEquals(wsTVShow.embedded?.episodes!![i],tvShow.episodes[i])
+        }
     }
 
     private fun assertNetworkEquals(wsNetwork: WsNetwork, network: Network) {
@@ -49,5 +54,21 @@ class ConverterTest {
         Assert.assertEquals(wsLinks.self, links.self)
         Assert.assertEquals(wsLinks.previousepisode, links.previousepisode)
         Assert.assertEquals(wsLinks.nextepisode, links.nextepisode)
+    }
+
+    private fun assertEpisodeEquals(wsEpisode: WsEpisode, episode: Episode) {
+        Assert.assertEquals(wsEpisode.id, episode.id)
+        Assert.assertEquals(wsEpisode.url, episode.url)
+        Assert.assertEquals(wsEpisode.name, episode.name)
+        Assert.assertEquals(wsEpisode.season, episode.season)
+        Assert.assertEquals(wsEpisode.number, episode.number)
+        Assert.assertEquals(wsEpisode.airdate, episode.airdate)
+        Assert.assertEquals(wsEpisode.airtime, episode.airtime)
+        Assert.assertEquals(wsEpisode.airstamp, episode.airstamp)
+        Assert.assertEquals(wsEpisode.runtime, episode.runtime)
+        Assert.assertEquals(wsEpisode.image?.medium, episode.mediumImage)
+        Assert.assertEquals(wsEpisode.image?.original, episode.originalImage)
+        Assert.assertEquals(wsEpisode.summary, episode.summary)
+        assertLinksEquals(wsEpisode.links!!,episode.links!!)
     }
 }
