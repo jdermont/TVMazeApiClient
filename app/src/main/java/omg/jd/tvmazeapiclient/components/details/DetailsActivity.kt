@@ -92,13 +92,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
     }
 
-    override fun setupEpisodes(latestEpisode: Episode?, nextEpisode: Episode?) {
-        val latestString =
-                if (latestEpisode == null) ""
-                else "${StringUtils.startPadZero(latestEpisode.season)}x${StringUtils.startPadZero(latestEpisode.number)}"
-        val nextString =
-                if (nextEpisode == null) ""
-                else "${StringUtils.startPadZero(nextEpisode.season)}x${StringUtils.startPadZero(nextEpisode.number)}"
-        detailsEpisodesText.text = latestString+"\n"+nextString
+    override fun writeEpisodes(latest: String, next: String) {
+        detailsEpisodesText.text = latest+"\n"+next
     }
 }

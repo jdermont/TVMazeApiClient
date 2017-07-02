@@ -43,6 +43,7 @@ class DetailsPresenterTest {
     @Test
     fun testOnInit() {
         val tvShow = createShow().convertToTvShow()
+        `when`(interactor.tvShow).thenReturn(tvShow)
         val tvShowWithEpisodes = tvShow.copy(
                 episodes = listOf(
                         createEpisode(id = 0, name = "Pilot 1").convertToEpisode(),
@@ -53,7 +54,7 @@ class DetailsPresenterTest {
         `when`(interactor.retrieveEpisodes()).thenReturn(observable)
         presenter.onInit(tvShow)
 
-        verify(interactor).tvShow = tvShow
+        verify(interactor).setTvShowIfNeeded(tvShow)
         verify(view).loadImageHeader(tvShow.originalImage)
         verify(view).setupViews(tvShow)
     }

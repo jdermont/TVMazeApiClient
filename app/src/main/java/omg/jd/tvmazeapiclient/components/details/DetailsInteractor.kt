@@ -8,23 +8,34 @@ import omg.jd.tvmazeapiclient.ws.ApiClient
 
 class DetailsInteractor : MVPDetails.Interactor {
 
-    private lateinit var cachedTvShow: TvShow
+    private var cachedTvShow: TvShow? = null
 
-    override var tvShow: TvShow
-        get() = cachedTvShow
-        set(value) {
-            cachedTvShow = value
+    override val tvShow: TvShow
+        get() = cachedTvShow ?: throw IllegalStateException("tvShow in interactor is null")
+
+    override fun setTvShowIfNeeded(tvShow: TvShow) {
+        if (cachedTvShow == null) {
+            cachedTvShow = tvShow
         }
+    }
 
     override fun retrieveEpisodes(): Observable<TvShow> {
-        return ApiClient.retrieveTVShow(tvShow.id.toString())
-                .subscribeOn(Schedulers.io())
-                .map {
-                    if (it.embedded != null) {
-                        cachedTvShow.episodes = it.embedded.convertToEpisodes()
-                    }
-                    cachedTvShow
+        val cachedTvShow: TvShow = this.cachedTvShow ?: throw IllegalStateException("tvShow in interactor is null")
+        val observable =
+                if (cachedTvShow.episodes.isNotEmpty()) {
+                    Observable.fromCallable { cachedTvShow }
+                            .subscribeOn(Schedulers.io())
+                } else {
+                    ApiClient.retrieveTVShow(tvShow.id.toString())
+                            .subscribeOn(Schedulers.io())
+                            .map {
+                                if (it.embedded != null) {
+                                    cachedTvShow.episodes = it.embedded.convertToEpisodes()
+                                }
+                                cachedTvShow
+                            }
                 }
+        return observable
     }
 
 }

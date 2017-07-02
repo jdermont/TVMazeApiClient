@@ -2,17 +2,19 @@ package omg.jd.tvmazeapiclient.utils
 
 import android.text.Html
 import android.text.Spanned
+import android.text.SpannedString
 
 object StringUtils {
     @Suppress("deprecation")
     fun fromHtmlCompat(html: String?): Spanned {
-        val result: Spanned
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            result = Html.fromHtml(html)
+        if (html == null) {
+            return SpannedString("")
         }
-        return result
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            return Html.fromHtml(html)
+        }
     }
 
     fun startPadZero(number: Int): String {

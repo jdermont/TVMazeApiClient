@@ -9,8 +9,9 @@ import omg.jd.tvmazeapiclient.ws.model.WsShow
 
 interface MVPDetails {
     interface Interactor {
-        var tvShow: TvShow
+        val tvShow: TvShow
 
+        fun setTvShowIfNeeded(tvShow: TvShow)
         fun retrieveEpisodes(): Observable<TvShow>
     }
 
@@ -21,6 +22,6 @@ interface MVPDetails {
     interface View : BaseView {
         fun loadImageHeader(imageUrl: String?)
         fun setupViews(tvShow: TvShow)
-        fun setupEpisodes(latestEpisode: Episode?, nextEpisode: Episode?)
+        fun writeEpisodes(latest: String, next: String)
     }
 }
