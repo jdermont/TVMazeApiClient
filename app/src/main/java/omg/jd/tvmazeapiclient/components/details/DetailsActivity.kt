@@ -3,6 +3,7 @@ package omg.jd.tvmazeapiclient.components.details
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.Loader
+import android.view.View
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
@@ -24,7 +25,6 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        setSupportActionBar(detailsToolbar)
 
         tvShow = intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW)
 
@@ -33,6 +33,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     }
 
     private fun initToolbar() {
+        setSupportActionBar(detailsToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayUseLogoEnabled(false)
     }
@@ -87,12 +88,19 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
     }
 
     override fun setupViews(tvShow: TvShow) {
-        val detailsString = "${tvShow.premiered ?: "-"}\n${tvShow.type ?: "-"}\n${tvShow.status ?: "-"}\n${tvShow.rating}"
+        val detailsString = getString(
+                R.string.detailsDescriptionText,
+                tvShow.premiered ?: "-",
+                tvShow.type ?: "-",
+                tvShow.status ?: "-",
+                tvShow.rating
+        )
         detailsDescriptionText.text = detailsString
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
     }
 
     override fun writeEpisodes(latest: String, next: String) {
-        detailsEpisodesText.text = latest+"\n"+next
+        detailsEpisodesText.text = getString(R.string.episodes_numbers,latest,next)
+        detailsProgressBar.visibility = View.GONE
     }
 }

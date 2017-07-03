@@ -11,7 +11,11 @@ class SearchInteractor : MVPSearch.Interactor {
         const val MAX_ENTRIES: Int = 20
     }
 
-    val searchCache: LruCache<String, List<WsTVShow>> = LruCache(MAX_ENTRIES)
+    private val searchCache: LruCache<String, List<WsTVShow>> by lazy {
+        val cache = LruCache<String, List<WsTVShow>>(MAX_ENTRIES)
+        cache.put("",listOf())
+        cache
+    }
 
     override fun searchShows(input: String): Observable<List<WsTVShow>> {
         val tvShows: List<WsTVShow>? = searchCache.get(input)
@@ -22,6 +26,6 @@ class SearchInteractor : MVPSearch.Interactor {
                     .doOnNext { searchCache.put(input,it) }
         }
 
-        return Observable.fromArray(tvShows)
+        return Observable.fromCallable { tvShows }
     }
 }

@@ -8,6 +8,7 @@ import omg.jd.tvmazeapiclient.db.model.TvShow
 import omg.jd.tvmazeapiclient.utils.convertToTvShow
 import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
+import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -52,6 +53,20 @@ class SearchPresenterTest {
 
         verify(interactor).searchShows(searchText)
         verify(view).setShows(showList.map { it.show.convertToTvShow() })
+    }
+
+    @Test
+    fun testOnSearchError() {
+        val searchText = "search string"
+        val observable = Observable
+                .fromArray(listOf<WsTVShow>())
+                .doOnNext { throw RuntimeException("No internet") }
+        `when`(interactor.searchShows(searchText)).thenReturn(observable)
+
+        presenter.onSearch(searchText)
+
+        verify(interactor).searchShows(searchText)
+        verify(view).errorOnGettingList()
     }
 
     @Test

@@ -3,7 +3,6 @@ package omg.jd.tvmazeapiclient.components.search
 import io.reactivex.android.schedulers.AndroidSchedulers
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.db.model.TvShow
-import omg.jd.tvmazeapiclient.mvp.BaseView
 import omg.jd.tvmazeapiclient.utils.convertToTvShow
 
 class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presenter {
@@ -15,13 +14,18 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
 
         view?.setLoading()
         interactor.searchShows(searchQuery)
+                .map { it.map { it.show.convertToTvShow() } }
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMapIterable { it }
-                .map { it.show.convertToTvShow() }
-                .toList()
-                .subscribe {
-                    it -> view?.setShows(it)
-                }
+                .subscribe(
+                        { // onNext
+                            view?.setShows(it)
+                        },
+                        { // onError
+                            view?.errorOnGettingList()
+                        },
+                        { // onComplete
+                        }
+                )
     }
 
     override fun onItemClick(viewHolder: SearchItemViewHolder) {

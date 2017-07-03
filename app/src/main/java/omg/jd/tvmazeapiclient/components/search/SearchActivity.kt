@@ -9,10 +9,10 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.Loader
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_search.*
 import omg.jd.tvmazeapiclient.BaseActivity
@@ -135,6 +135,11 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
         intent.putExtra(DetailsActivity.EXTRA_TVSHOW, show)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
         startActivity(intent, options.toBundle())
+    }
+
+    override fun errorOnGettingList() {
+        searchMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
+        Toast.makeText(applicationContext, R.string.error_while_searching, Toast.LENGTH_SHORT).show()
     }
 
 }

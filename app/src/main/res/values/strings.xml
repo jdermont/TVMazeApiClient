@@ -8,5 +8,8 @@
     <string name="transition_image">tvShowImage</string>
     <string name="summary">Summary:</string>
     <string name="details_text">Premiered:\nType:\nStatus:\nRating:</string>
+    <string name="detailsDescriptionText" formatted="false">%s\n%2s\n%3s\n%.1f</string>
     <string name="latest_next_episode">Latest episode:\nNext episode:</string>
+    <string name="episodes_numbers" formatted="false">%s\n%s</string>
+    <string name="error_while_searching">Error ocurred while searching</string>
 </resources>

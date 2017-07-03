@@ -20,6 +20,7 @@ interface MVPSearch {
     interface View : BaseView {
         fun setLoading()
         fun setEmpty()
+        fun errorOnGettingList()
         fun setShows(shows: List<TvShow>)
         fun showDetails(show: TvShow, transitedView: android.view.View)
     }

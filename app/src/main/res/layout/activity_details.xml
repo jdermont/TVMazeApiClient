@@ -85,7 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/global_margin">
+                android:layout_marginBottom="@dimen/global_margin"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,6 +96,12 @@
                     android:gravity="right"
                     android:layout_marginEnd="@dimen/global_margin"
                     android:text="@string/latest_next_episode"/>
+
+                <ProgressBar
+                    android:id="@+id/detailsProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="36sp"
+                    android:layout_height="36sp"/>
 
                 <TextView
                     android:id="@+id/detailsEpisodesText"
