@@ -39,19 +39,19 @@ data class TvShow(@PrimaryKey(autoincrement = false) @Column(name = "id") var id
     constructor() : this(0L, "", "", "", "", StringList(), "", 0, "", "", StringList(), 0.0, 0, null, "", "", "", 0, null, listOf())
 
     @OneToMany(methods = arrayOf(OneToMany.Method.ALL), isVariablePrivate = true, variableName = "tracks")
-    fun getTracks(): List<Episode>? {
-//        if (_tracks?.isEmpty() ?: true) {
+    fun getEps(): List<Episode>? {
+//        if (_eps?.isEmpty() ?: true) {
 //            val condition = OperatorGroup.nonGroupingClause()
 //                    .and(DbFlowTrack_Table.playlist_streamId.eq(this.streamId))
-//            _tracks = ContentUtils.queryList(OpenFMDatabase.DbFlowTrackProvider.CONTENT_URI, DbFlowTrack::class.java, condition, null)
+//            _eps = ContentUtils.queryList(OpeDatabase.DbFlowTrackProvider.CONTENT_URI, DbFlowTrack::class.java, condition, null)
 //                    .sortedBy { it.endTimestamp }
 //        }
-//        return _tracks
+//        return _eps
         TODO("")
     }
 
-    fun setTracks(dbTracks: List<Episode>?) {
-        dbTracks?.forEach { it.tvShow = this }
+    fun setEps(dbEps: List<Episode>?) {
+        dbEps?.forEach { it.tvShow = this }
         //_tracks = dbTracks
         TODO("")
     }
