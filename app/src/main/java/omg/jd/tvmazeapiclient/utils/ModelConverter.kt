@@ -1,5 +1,6 @@
 package omg.jd.tvmazeapiclient.utils
 
+import omg.jd.tvmazeapiclient.db.dbflow.utils.StringList
 import omg.jd.tvmazeapiclient.db.model.Episode
 import omg.jd.tvmazeapiclient.db.model.Links
 import omg.jd.tvmazeapiclient.db.model.Network
@@ -12,12 +13,12 @@ fun WsShow.convertToTvShow(): TvShow {
             name = this.name,
             type = this.type,
             language = this.language,
-            genres = this.genres,
+            genres = StringList(this.genres),
             status = this.status,
             runtime = this.runtime,
             premiered = this.premiered,
             scheduleTime = this.schedule?.time,
-            scheduleDays = this.schedule?.days ?: listOf(),
+            scheduleDays = StringList(this.schedule?.days ?: listOf()),
             rating = this.rating?.average ?: 0.0,
             weight = this.weight,
             network = this.network?.convertToNetwork(),
