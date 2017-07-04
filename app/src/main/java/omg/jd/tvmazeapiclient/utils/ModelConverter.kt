@@ -27,7 +27,7 @@ fun WsShow.convertToTvShow(): TvShow {
             summary = this.summary,
             updated = this.updated,
             links = this.links?.convertToLinks(),
-            episodes = this.embedded?.convertToEpisodes() ?: listOf())
+            _episodes = this.embedded?.convertToEpisodes() ?: listOf())
 }
 
 fun WsNetwork.convertToNetwork(): Network {

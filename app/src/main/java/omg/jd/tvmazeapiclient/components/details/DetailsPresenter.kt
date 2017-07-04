@@ -18,8 +18,8 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
         interactor.retrieveEpisodes()
                 .map {
                     val now = DateTime.now()
-                    val latest = it.episodes.lastOrNull { it.datetime <= now }
-                    val next = it.episodes.firstOrNull { it.datetime > now }
+                    val latest = it.episodes?.lastOrNull { it.datetime <= now }
+                    val next = it.episodes?.firstOrNull { it.datetime > now }
                     Pair(makeEpisodeNumber(latest),makeEpisodeNumber(next))
                 }
                 .observeOn(AndroidSchedulers.mainThread())

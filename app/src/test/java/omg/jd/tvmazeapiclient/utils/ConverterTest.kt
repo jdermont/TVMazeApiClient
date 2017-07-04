@@ -37,7 +37,7 @@ class ConverterTest {
         Assert.assertEquals(wsTVShow.updated, tvShow.updated)
         assertLinksEquals(wsTVShow.links!!, tvShow.links!!)
         for (i in 0..wsTVShow.embedded?.episodes!!.size-1) {
-            assertEpisodeEquals(wsTVShow.embedded?.episodes!![i],tvShow.episodes[i])
+            assertEpisodeEquals(wsTVShow.embedded?.episodes!![i],tvShow.episodes!![i])
         }
     }
 

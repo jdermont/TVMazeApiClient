@@ -1,5 +1,6 @@
 package omg.jd.tvmazeapiclient.components.search
 
+import com.raizlabs.android.dbflow.kotlinextensions.save
 import io.reactivex.android.schedulers.AndroidSchedulers
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.db.model.TvShow
@@ -19,8 +20,10 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
                 .subscribe(
                         { // onNext
                             view?.setShows(it)
+                            //it.save()
                         },
                         { // onError
+                            it.printStackTrace()
                             view?.errorOnGettingList()
                         },
                         { // onComplete

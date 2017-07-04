@@ -22,7 +22,7 @@ class DetailsInteractor : MVPDetails.Interactor {
     override fun retrieveEpisodes(): Observable<TvShow> {
         val cachedTvShow: TvShow = this.cachedTvShow ?: throw IllegalStateException("tvShow in interactor is null")
         val observable =
-                if (cachedTvShow.episodes.isNotEmpty()) {
+                if (cachedTvShow.episodes?.isNotEmpty() ?: false) {
                     Observable.fromCallable { cachedTvShow }
                             .subscribeOn(Schedulers.io())
                 } else {

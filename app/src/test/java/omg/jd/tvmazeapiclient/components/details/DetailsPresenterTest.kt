@@ -45,7 +45,7 @@ class DetailsPresenterTest {
         val tvShow = createShow().convertToTvShow()
         `when`(interactor.tvShow).thenReturn(tvShow)
         val tvShowWithEpisodes = tvShow.copy(
-                episodes = listOf(
+                _episodes = listOf(
                         createEpisode(id = 0, name = "Pilot 1").convertToEpisode(),
                         createEpisode(id = 0, name = "Pilot 2").convertToEpisode()
                 )

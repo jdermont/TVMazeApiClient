@@ -24,7 +24,7 @@ data class Episode(@PrimaryKey(autoincrement = false) @Column(name = "id") var i
                    @Column(name = "summary") var summary: String?,
                    @ForeignKey(tableClass = Links::class) var links: Links?,
                    @ForeignKey(saveForeignKeyModel = false, stubbedRelationship = true, onDelete = ForeignKeyAction.CASCADE)
-                   var tvShow: TvShow? = TvShow()) : Parcelable {
+                   var tvShow: TvShow? = null) : Parcelable {
 
     companion object {
         @JvmField val CREATOR = PaperParcelEpisode.CREATOR
