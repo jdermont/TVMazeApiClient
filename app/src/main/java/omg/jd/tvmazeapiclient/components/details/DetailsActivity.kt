@@ -7,8 +7,8 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.db.model.Episode
-import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.ScreenHelper.ToolbarState
 import omg.jd.tvmazeapiclient.utils.StringUtils

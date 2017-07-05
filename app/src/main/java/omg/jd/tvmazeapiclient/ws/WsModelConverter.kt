@@ -1,36 +1,35 @@
-package omg.jd.tvmazeapiclient.utils
+package omg.jd.tvmazeapiclient.ws
 
-import omg.jd.tvmazeapiclient.db.dbflow.utils.StringList
-import omg.jd.tvmazeapiclient.db.model.Episode
-import omg.jd.tvmazeapiclient.db.model.Links
-import omg.jd.tvmazeapiclient.db.model.Network
-import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.entity.Episode
+import omg.jd.tvmazeapiclient.entity.Links
+import omg.jd.tvmazeapiclient.entity.Network
+import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.ws.model.*
 
-fun WsShow.convertToTvShow(): TvShow {
+fun WsShow.convertToTvShowEntity(): TvShow {
     return TvShow(id = this.id,
             url = this.url,
             name = this.name,
             type = this.type,
             language = this.language,
-            genres = StringList(this.genres),
+            genres = this.genres,
             status = this.status,
             runtime = this.runtime,
             premiered = this.premiered,
             scheduleTime = this.schedule?.time,
-            scheduleDays = StringList(this.schedule?.days ?: listOf()),
+            scheduleDays = this.schedule?.days ?: listOf(),
             rating = this.rating?.average ?: 0.0,
             weight = this.weight,
-            network = this.network?.convertToNetwork(),
+            network = this.network?.convertToNetworkEntity(),
             mediumImage = this.image?.medium,
             originalImage = this.image?.original,
             summary = this.summary,
             updated = this.updated,
-            links = this.links?.convertToLinks(),
-            _episodes = this.embedded?.convertToEpisodes() ?: listOf())
+            links = this.links?.convertToLinksEntity(),
+            episodes = this.embedded?.convertToEpisodesListEntity() ?: listOf())
 }
 
-fun WsNetwork.convertToNetwork(): Network {
+fun WsNetwork.convertToNetworkEntity(): Network {
     return Network(id = this.id,
             name = this.name,
             countryCode = this.country?.code,
@@ -38,13 +37,13 @@ fun WsNetwork.convertToNetwork(): Network {
             countryTimezone = this.country?.timezone)
 }
 
-fun WsLinks.convertToLinks(): Links {
+fun WsLinks.convertToLinksEntity(): Links {
     return Links(self = this.self,
             previousepisode = this.previousepisode,
             nextepisode = this.nextepisode)
 }
 
-fun WsEpisode.convertToEpisode(): Episode {
+fun WsEpisode.convertToEpisodeEntity(): Episode {
     return Episode(id = this.id,
             url = this.url,
             name = this.name,
@@ -57,9 +56,9 @@ fun WsEpisode.convertToEpisode(): Episode {
             mediumImage = this.image?.medium,
             originalImage = this.image?.original,
             summary = this.summary,
-            links = this.links?.convertToLinks())
+            links = this.links?.convertToLinksEntity())
 }
 
-fun WsEmbedded.convertToEpisodes(): List<Episode> {
-    return this.episodes.map { it.convertToEpisode() }
+fun WsEmbedded.convertToEpisodesListEntity(): List<Episode> {
+    return this.episodes.map { it.convertToEpisodeEntity() }
 }

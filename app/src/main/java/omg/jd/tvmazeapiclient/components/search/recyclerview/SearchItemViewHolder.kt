@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.search_item.view.*
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.utils.loadUrl
 
 class SearchItemViewHolder(itemView: View, clickListener: SearchItemsAdapter.ViewHolderOnClickListener?) : RecyclerView.ViewHolder(itemView) {

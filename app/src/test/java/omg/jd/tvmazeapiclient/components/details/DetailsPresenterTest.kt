@@ -1,11 +1,10 @@
 package omg.jd.tvmazeapiclient.components.details
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
-import omg.jd.tvmazeapiclient.utils.convertToEpisode
-import omg.jd.tvmazeapiclient.utils.convertToTvShow
+import omg.jd.tvmazeapiclient.ws.convertToEpisodeEntity
+import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.utils.createEpisode
 import omg.jd.tvmazeapiclient.utils.createShow
 import org.junit.Before
@@ -42,12 +41,12 @@ class DetailsPresenterTest {
 
     @Test
     fun testOnInit() {
-        val tvShow = createShow().convertToTvShow()
+        val tvShow = createShow().convertToTvShowEntity()
         `when`(interactor.tvShow).thenReturn(tvShow)
         val tvShowWithEpisodes = tvShow.copy(
-                _episodes = listOf(
-                        createEpisode(id = 0, name = "Pilot 1").convertToEpisode(),
-                        createEpisode(id = 0, name = "Pilot 2").convertToEpisode()
+                episodes = listOf(
+                        createEpisode(id = 0, name = "Pilot 1").convertToEpisodeEntity(),
+                        createEpisode(id = 0, name = "Pilot 2").convertToEpisodeEntity()
                 )
         )
         val observable = Observable.just(tvShowWithEpisodes)

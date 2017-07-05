@@ -2,8 +2,9 @@ package omg.jd.tvmazeapiclient.components.details
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import omg.jd.tvmazeapiclient.db.model.TvShow
-import omg.jd.tvmazeapiclient.utils.convertToEpisodes
+import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.ws.convertToEpisodesListEntity
 import omg.jd.tvmazeapiclient.ws.ApiClient
 
 class DetailsInteractor : MVPDetails.Interactor {
@@ -22,7 +23,7 @@ class DetailsInteractor : MVPDetails.Interactor {
     override fun retrieveEpisodes(): Observable<TvShow> {
         val cachedTvShow: TvShow = this.cachedTvShow ?: throw IllegalStateException("tvShow in interactor is null")
         val observable =
-                if (cachedTvShow.episodes?.isNotEmpty() ?: false) {
+                if (cachedTvShow.episodes.isNotEmpty()) {
                     Observable.fromCallable { cachedTvShow }
                             .subscribeOn(Schedulers.io())
                 } else {
@@ -30,7 +31,7 @@ class DetailsInteractor : MVPDetails.Interactor {
                             .subscribeOn(Schedulers.io())
                             .map {
                                 if (it.embedded != null) {
-                                    cachedTvShow.episodes = it.embedded.convertToEpisodes()
+                                    cachedTvShow.episodes = it.embedded.convertToEpisodesListEntity()
                                 }
                                 cachedTvShow
                             }

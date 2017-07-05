@@ -1,8 +1,9 @@
 package omg.jd.tvmazeapiclient.utils
 
-import omg.jd.tvmazeapiclient.db.model.Episode
-import omg.jd.tvmazeapiclient.db.model.Links
-import omg.jd.tvmazeapiclient.db.model.Network
+import omg.jd.tvmazeapiclient.entity.Episode
+import omg.jd.tvmazeapiclient.entity.Links
+import omg.jd.tvmazeapiclient.entity.Network
+import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsEpisode
 import omg.jd.tvmazeapiclient.ws.model.WsLinks
 import omg.jd.tvmazeapiclient.ws.model.WsNetwork
@@ -14,7 +15,7 @@ class ConverterTest {
     @Test
     fun convertWsTVShowToTvShowTest() {
         val wsTVShow = createShowWithEpisodes(0, "some show")
-        val tvShow = wsTVShow.convertToTvShow()
+        val tvShow = wsTVShow.convertToTvShowEntity()
 
         Assert.assertEquals(wsTVShow.id, tvShow.id)
         Assert.assertEquals(wsTVShow.url, tvShow.url)

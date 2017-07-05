@@ -43,13 +43,28 @@ fun createShow(id: Long = 0, name: String = "Show"): WsShow {
     )
 }
 
-fun createShowWithEpisodes(id: Long = 0, name: String = "Show"): WsShow {
+fun createShowListWithEpisodes(count: Int = 1): List<WsTVShow> {
+    val tvShows = (0..count).map {
+        WsTVShow(0.0,
+                createShowWithEpisodes(
+                        id = it.toLong(),
+                        name = "Show $it",
+                        episodeCount = 2,
+                        episodeStartId = 100*it
+                )
+        )
+
+    }
+    return tvShows
+}
+
+fun createShowWithEpisodes(id: Long = 0,
+                           name: String = "Show",
+                           episodeCount: Int = 2,
+                           episodeStartId: Int = 0): WsShow {
     return createShow(id,name).copy(
             embedded = WsEmbedded(
-                    episodes = listOf(
-                            createEpisode(0, "Pilot 1"),
-                            createEpisode(1, "Pilot 2")
-                    )
+                    episodes = createEpisodeList(episodeCount, episodeStartId)
             )
         )
 }
@@ -77,4 +92,11 @@ fun createEpisode(id: Long = 0, name: String = "Episode"): WsEpisode {
             )
 
     )
+}
+
+fun createEpisodeList(count: Int = 1, startId: Int = 0): List<WsEpisode> {
+    val episodes = (0..count).map {
+        createEpisode(id = (it+startId).toLong(), name = "Episode $it")
+    }
+    return episodes
 }

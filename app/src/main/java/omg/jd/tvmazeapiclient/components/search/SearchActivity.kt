@@ -20,7 +20,7 @@ import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.details.DetailsActivity
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
-import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 
 

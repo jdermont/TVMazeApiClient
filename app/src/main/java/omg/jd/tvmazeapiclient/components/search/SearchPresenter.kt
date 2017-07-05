@@ -1,10 +1,10 @@
 package omg.jd.tvmazeapiclient.components.search
 
-import com.raizlabs.android.dbflow.kotlinextensions.save
 import io.reactivex.android.schedulers.AndroidSchedulers
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
-import omg.jd.tvmazeapiclient.db.model.TvShow
-import omg.jd.tvmazeapiclient.utils.convertToTvShow
+import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
 
 class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presenter {
 
@@ -15,7 +15,7 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
 
         view?.setLoading()
         interactor.searchShows(searchQuery)
-                .map { it.map { it.show.convertToTvShow() } }
+                .map { it.map { it.show.convertToTvShowEntity() } }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { // onNext

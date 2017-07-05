@@ -4,10 +4,10 @@ import android.view.View
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
-import omg.jd.tvmazeapiclient.db.model.TvShow
-import omg.jd.tvmazeapiclient.utils.convertToTvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
+import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 import org.junit.Before
 import org.junit.Rule
@@ -52,7 +52,7 @@ class SearchPresenterTest {
         presenter.onSearch(searchText)
 
         verify(interactor).searchShows(searchText)
-        verify(view).setShows(showList.map { it.show.convertToTvShow() })
+        verify(view).setShows(showList.map { it.show.convertToTvShowEntity() })
     }
 
     @Test
@@ -72,7 +72,7 @@ class SearchPresenterTest {
     @Test
     fun testOnItemClick() {
         val viewHolder = mock(SearchItemViewHolder::class.java)
-        `when`(viewHolder.data).thenReturn(createShow().convertToTvShow())
+        `when`(viewHolder.data).thenReturn(createShow().convertToTvShowEntity())
         `when`(viewHolder.transitedView).thenReturn(mock(View::class.java))
 
         presenter.onItemClick(viewHolder)

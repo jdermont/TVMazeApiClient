@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.db.model.TvShow
+import omg.jd.tvmazeapiclient.entity.TvShow
 
 class SearchItemsAdapter(val clickListener: ViewHolderOnClickListener?) : RecyclerView.Adapter<SearchItemViewHolder>() {
 
