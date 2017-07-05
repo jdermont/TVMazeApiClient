@@ -5,12 +5,12 @@ import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
 import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsEpisode
-import omg.jd.tvmazeapiclient.ws.model.WsLinks
+import omg.jd.tvmazeapiclient.ws.model.LinksDbFlow
 import omg.jd.tvmazeapiclient.ws.model.WsNetwork
 import org.junit.Assert
 import org.junit.Test
 
-class ConverterTest {
+class WsEntityConverterTest {
 
     @Test
     fun convertWsTVShowToTvShowTest() {
@@ -48,10 +48,9 @@ class ConverterTest {
         Assert.assertEquals(wsNetwork.country?.code, network.countryCode)
         Assert.assertEquals(wsNetwork.country?.name, network.countryName)
         Assert.assertEquals(wsNetwork.country?.timezone, network.countryTimezone)
-        Assert.assertEquals(wsNetwork.country?.code, network.countryCode)
     }
 
-    private fun assertLinksEquals(wsLinks: WsLinks, links: Links) {
+    private fun assertLinksEquals(wsLinks: LinksDbFlow, links: Links) {
         Assert.assertEquals(wsLinks.self, links.self)
         Assert.assertEquals(wsLinks.previousepisode, links.previousepisode)
         Assert.assertEquals(wsLinks.nextepisode, links.nextepisode)

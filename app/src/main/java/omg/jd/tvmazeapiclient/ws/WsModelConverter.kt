@@ -37,7 +37,7 @@ fun WsNetwork.convertToNetworkEntity(): Network {
             countryTimezone = this.country?.timezone)
 }
 
-fun WsLinks.convertToLinksEntity(): Links {
+fun LinksDbFlow.convertToLinksEntity(): Links {
     return Links(self = this.self,
             previousepisode = this.previousepisode,
             nextepisode = this.nextepisode)

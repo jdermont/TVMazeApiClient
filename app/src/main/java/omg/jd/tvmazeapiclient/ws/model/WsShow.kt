@@ -20,7 +20,7 @@ data class WsShow(val id : Long = 0,
                   val image : WsImage?,
                   val summary : String?,
                   val updated : Long = 0,
-                  @SerializedName("_links") val links : WsLinks?,
+                  @SerializedName("_links") val links : LinksDbFlow?,
                   @SerializedName("_embedded") val embedded: WsEmbedded?)
 
 

@@ -34,7 +34,7 @@ fun createShow(id: Long = 0, name: String = "Show"): WsShow {
             ),
             summary = "Something about The Big Bang Theory",
             updated = 1494671152L,
-            links = WsLinks(
+            links = LinksDbFlow(
                     self = "http://api.tvmaze.com/shows/66",
                     previousepisode = "http://api.tvmaze.com/episodes/1107587",
                     nextepisode = null
@@ -85,7 +85,7 @@ fun createEpisode(id: Long = 0, name: String = "Episode"): WsEpisode {
                     original = "http://static.tvmaze.com/uploads/images/original_untouched/4/12368.jpg"
             ),
             summary = "Is a comedy about brilliant physicists, Leonard and Sheldon.",
-            links = WsLinks(
+            links = LinksDbFlow(
                     self = "http://api.tvmaze.com/episodes/2913",
                     previousepisode = null,
                     nextepisode = null
