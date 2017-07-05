@@ -3,7 +3,7 @@ package omg.jd.tvmazeapiclient.utils
 import omg.jd.tvmazeapiclient.ws.model.*
 
 fun createShowList(count: Int = 1): List<WsTVShow> {
-    val tvShows = (0..count).map {
+    val tvShows = (0..count-1).map {
         WsTVShow(0.0, createShow(id = it.toLong(), name = "Show $it"))
     }
     return tvShows
@@ -44,7 +44,7 @@ fun createShow(id: Long = 0, name: String = "Show"): WsShow {
 }
 
 fun createShowListWithEpisodes(count: Int = 1): List<WsTVShow> {
-    val tvShows = (0..count).map {
+    val tvShows = (0..count-1).map {
         WsTVShow(0.0,
                 createShowWithEpisodes(
                         id = it.toLong(),
@@ -95,7 +95,7 @@ fun createEpisode(id: Long = 0, name: String = "Episode"): WsEpisode {
 }
 
 fun createEpisodeList(count: Int = 1, startId: Int = 0): List<WsEpisode> {
-    val episodes = (0..count).map {
+    val episodes = (0..count-1).map {
         createEpisode(id = (it+startId).toLong(), name = "Episode $it")
     }
     return episodes
