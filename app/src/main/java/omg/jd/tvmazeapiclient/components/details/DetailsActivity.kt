@@ -68,6 +68,9 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
                 }
             }
         })
+        detailsFloatingActionButton.setOnClickListener {
+            presenter?.onFabClicked()
+        }
     }
 
     override fun onBackPressed() {
@@ -97,6 +100,15 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         )
         detailsDescriptionText.text = detailsString
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
+    }
+
+    override fun setFloatingActionButton(tvShowExistsInDb: Boolean) {
+        detailsFloatingActionButton.isClickable = !tvShowExistsInDb
+        if (tvShowExistsInDb) {
+            detailsFloatingActionButton.setImageResource(R.drawable.ic_done_white_24dp)
+        } else {
+            detailsFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp)
+        }
     }
 
     override fun writeEpisodes(latest: String, next: String) {

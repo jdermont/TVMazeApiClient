@@ -1,5 +1,7 @@
 package omg.jd.tvmazeapiclient.components.details
 
+import android.os.SystemClock
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import omg.jd.tvmazeapiclient.db.model.DbFlowEpisode
 import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
@@ -14,8 +16,10 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
 
     override fun onInit(tvShow: TvShow) {
         interactor.setTvShowIfNeeded(tvShow)
+        interactor.checkIfTvShowExistsInDb()
         view?.loadImageHeader(interactor.tvShow.originalImage)
         view?.setupViews(interactor.tvShow)
+        view?.setFloatingActionButton(interactor.tvShowExistsInDb)
 
         interactor.retrieveEpisodes()
                 .map {
@@ -36,5 +40,10 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
         } else {
             return "${StringUtils.startPadZero(episode.season)}x${StringUtils.startPadZero(episode.number)}"
         }
+    }
+
+    override fun onFabClicked() {
+        interactor.saveTvShow()
+        view?.setFloatingActionButton(interactor.tvShowExistsInDb)
     }
 }

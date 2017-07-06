@@ -126,18 +126,16 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="The Big Bang Theory is a comedy about brilliant physicists, Leonard and Sheldon, who are the kind of beautiful minds that understand how the universe works."/>
         </LinearLayout>
-
-
-
-
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/detailsFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_add_white_24dp"/>
+        android:clickable="true"
+        app:rippleColor="#FF0000"
+        app:srcCompat="@drawable/ic_done_white_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
