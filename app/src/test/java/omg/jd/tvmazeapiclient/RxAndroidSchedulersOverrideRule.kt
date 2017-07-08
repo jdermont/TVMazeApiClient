@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient
 
 import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -18,6 +19,7 @@ class RxAndroidSchedulersOverrideRule : TestRule {
         return object : Statement() {
             @Throws(Throwable::class)
             override fun evaluate() {
+                RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
                 RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
                 base.evaluate()
             }

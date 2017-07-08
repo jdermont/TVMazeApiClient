@@ -22,7 +22,6 @@ class SearchInteractor : MVPSearch.Interactor {
 
         if (tvShows == null) {
             return ApiClient.retrieveTVShows(input)
-                    .subscribeOn(Schedulers.io())
                     .doOnNext { searchCache.put(input,it) }
         }
 

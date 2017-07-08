@@ -4,11 +4,8 @@ import omg.jd.tvmazeapiclient.db.model.DbFlowEpisode
 import omg.jd.tvmazeapiclient.db.model.DbFlowLinks
 import omg.jd.tvmazeapiclient.db.model.DbFlowNetwork
 import omg.jd.tvmazeapiclient.entity.*
-import omg.jd.tvmazeapiclient.ws.convertToTvShowDbFlow
-import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
-import omg.jd.tvmazeapiclient.ws.model.WsEpisode
-import omg.jd.tvmazeapiclient.ws.model.LinksDbFlow
-import omg.jd.tvmazeapiclient.ws.model.WsNetwork
+import omg.jd.tvmazeapiclient.db.model.convertToTvShowDbFlow
+import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import org.junit.Assert
 import org.junit.Test
 

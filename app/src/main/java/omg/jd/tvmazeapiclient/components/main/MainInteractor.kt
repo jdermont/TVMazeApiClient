@@ -13,7 +13,6 @@ class MainInteractor : MVPMain.Interactor {
             SQLite.select().from(DbFlowTvShow::class.java)
                     .queryList()
         }
-                .subscribeOn(Schedulers.io())
                 .map { it.map { it.convertToTvShowEntity() } }
     }
 

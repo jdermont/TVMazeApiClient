@@ -2,12 +2,13 @@ package omg.jd.tvmazeapiclient.components.search
 
 import android.view.View
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
-import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
+import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 import org.junit.Before
 import org.junit.Rule

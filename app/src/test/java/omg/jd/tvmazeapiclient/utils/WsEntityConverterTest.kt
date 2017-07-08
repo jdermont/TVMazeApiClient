@@ -3,7 +3,7 @@ package omg.jd.tvmazeapiclient.utils
 import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
-import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
+import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsEpisode
 import omg.jd.tvmazeapiclient.ws.model.LinksDbFlow
 import omg.jd.tvmazeapiclient.ws.model.WsNetwork

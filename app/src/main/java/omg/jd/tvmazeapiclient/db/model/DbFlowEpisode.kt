@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.db.model
 
 import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.structure.BaseModel
 import omg.jd.tvmazeapiclient.db.dbflow.TvMazeDatabase
 
 @Table(name = "episodes", database = TvMazeDatabase::class)
@@ -19,7 +20,7 @@ data class DbFlowEpisode(@PrimaryKey(autoincrement = false) @Column(name = "id")
                          @ForeignKey(tableClass = DbFlowLinks::class, saveForeignKeyModel = true, deleteForeignKeyModel = true)
                    var links: DbFlowLinks?,
                          @ForeignKey(saveForeignKeyModel = false, stubbedRelationship = true, onDelete = ForeignKeyAction.CASCADE)
-                   var tvShow: DbFlowTvShow? = null) {
+                   var tvShow: DbFlowTvShow? = null) : BaseModel() {
 
     @Deprecated(message = "Do not use this constructor. This is workaround for DBFlow.")
     constructor() : this(0L, "", "", 0, 0, "", "", "", 0, "", "", "", null)

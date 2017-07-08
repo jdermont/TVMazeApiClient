@@ -23,6 +23,7 @@ class SearchItemsAdapter(val clickListener: ViewHolderOnClickListener?) : Recycl
         return showList.size
     }
 
+    // TODO: use DiffUtil
     fun updateList(showList: List<TvShow>) {
         this.showList.clear()
         this.showList.addAll(showList)

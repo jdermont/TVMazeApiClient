@@ -11,10 +11,12 @@ interface MVPMain {
     }
 
     interface Presenter : BasePresenter<View> {
-
+        fun onInit()
     }
 
     interface View : BaseView {
-
+        fun setLoading()
+        fun setEmpty()
+        fun setShows(shows: List<TvShow>)
     }
 }

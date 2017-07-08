@@ -1,10 +1,9 @@
-package omg.jd.tvmazeapiclient.ws
+package omg.jd.tvmazeapiclient.ws.model
 
 import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
 import omg.jd.tvmazeapiclient.entity.TvShow
-import omg.jd.tvmazeapiclient.ws.model.*
 
 fun WsShow.convertToTvShowEntity(): TvShow {
     return TvShow(id = this.id,

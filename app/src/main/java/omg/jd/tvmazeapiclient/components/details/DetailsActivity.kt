@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.Loader
 import android.view.View
+import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
@@ -69,7 +70,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
             }
         })
         detailsFloatingActionButton.setOnClickListener {
-            presenter?.onFabClicked()
+            presenter?.onFabClicked(detailsFloatingActionButton.tag as MVPDetails.Presenter.TvShowInDB)
         }
     }
 
@@ -102,13 +103,29 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
     }
 
-    override fun setFloatingActionButton(tvShowExistsInDb: Boolean) {
-        detailsFloatingActionButton.isClickable = !tvShowExistsInDb
-        if (tvShowExistsInDb) {
-            detailsFloatingActionButton.setImageResource(R.drawable.ic_done_white_24dp)
-        } else {
-            detailsFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp)
+    override fun setFloatingActionButton(tvShowInDB: MVPDetails.Presenter.TvShowInDB) {
+        if (detailsFABOverlay.visibility == View.INVISIBLE) {
+            detailsFABOverlay.visibility = View.VISIBLE
+            val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
+            detailsFABOverlay.startAnimation(animation)
         }
+        when (tvShowInDB) {
+            MVPDetails.Presenter.TvShowInDB.IN_DB ->
+                detailsFloatingActionButton.setImageResource(R.drawable.ic_delete_white_24dp)
+            MVPDetails.Presenter.TvShowInDB.NOT_IN_DB ->
+                detailsFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp)
+        }
+        detailsFloatingActionButton.tag = tvShowInDB
+    }
+
+    override fun enableFloatingActionProgress() {
+        detailsFloatingActionButton.isClickable = false
+        detailsFABProgress.visibility = View.VISIBLE
+    }
+
+    override fun disableFloatingActionProgress() {
+        detailsFloatingActionButton.isClickable = true
+        detailsFABProgress.visibility = View.INVISIBLE
     }
 
     override fun writeEpisodes(latest: String, next: String) {

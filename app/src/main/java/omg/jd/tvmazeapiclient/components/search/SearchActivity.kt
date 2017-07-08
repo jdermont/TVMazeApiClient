@@ -56,8 +56,6 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
         setContentView(R.layout.activity_search)
         setSupportActionBar(searchToolbar)
 
-        supportLoaderManager.initLoader(LOADER_ID, null, this)
-
         initViews()
     }
 

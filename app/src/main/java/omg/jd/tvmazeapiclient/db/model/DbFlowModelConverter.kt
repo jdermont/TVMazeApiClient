@@ -1,10 +1,6 @@
-package omg.jd.tvmazeapiclient.ws
+package omg.jd.tvmazeapiclient.db.model
 
 import omg.jd.tvmazeapiclient.db.dbflow.utils.StringList
-import omg.jd.tvmazeapiclient.db.model.DbFlowEpisode
-import omg.jd.tvmazeapiclient.db.model.DbFlowLinks
-import omg.jd.tvmazeapiclient.db.model.DbFlowNetwork
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
 import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network

@@ -10,10 +10,10 @@ import omg.jd.tvmazeapiclient.utils.createEpisodeList
 import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
 import omg.jd.tvmazeapiclient.utils.createShowListWithEpisodes
-import omg.jd.tvmazeapiclient.ws.convertToEpisodeDbFlow
-import omg.jd.tvmazeapiclient.ws.convertToEpisodeEntity
-import omg.jd.tvmazeapiclient.ws.convertToTvShowDbFlow
-import omg.jd.tvmazeapiclient.ws.convertToTvShowEntity
+import omg.jd.tvmazeapiclient.db.model.convertToEpisodeDbFlow
+import omg.jd.tvmazeapiclient.ws.model.convertToEpisodeEntity
+import omg.jd.tvmazeapiclient.db.model.convertToTvShowDbFlow
+import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule

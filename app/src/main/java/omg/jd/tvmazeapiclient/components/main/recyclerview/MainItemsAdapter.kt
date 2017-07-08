@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.entity.TvShow
 
-class MainItemsAdapter() : RecyclerView.Adapter<MainItemViewHolder>() {
+class MainItemsAdapter : RecyclerView.Adapter<MainItemViewHolder>() {
 
     val showList: ArrayList<TvShow> = ArrayList()
 
@@ -21,6 +21,13 @@ class MainItemsAdapter() : RecyclerView.Adapter<MainItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MainItemViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.main_item, parent, false)
         return MainItemViewHolder(view)
+    }
+
+    // TODO: use DiffUtil
+    fun updateList(showList: List<TvShow>) {
+        this.showList.clear()
+        this.showList.addAll(showList)
+        notifyDataSetChanged()
     }
 
 }

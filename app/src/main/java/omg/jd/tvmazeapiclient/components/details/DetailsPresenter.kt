@@ -1,10 +1,9 @@
 package omg.jd.tvmazeapiclient.components.details
 
-import android.os.SystemClock
-import android.util.Log
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import omg.jd.tvmazeapiclient.db.model.DbFlowEpisode
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import io.reactivex.schedulers.Schedulers
+import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.*
 import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.utils.StringUtils
@@ -16,10 +15,15 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
 
     override fun onInit(tvShow: TvShow) {
         interactor.setTvShowIfNeeded(tvShow)
-        interactor.checkIfTvShowExistsInDb()
         view?.loadImageHeader(interactor.tvShow.originalImage)
         view?.setupViews(interactor.tvShow)
-        view?.setFloatingActionButton(interactor.tvShowExistsInDb)
+
+        interactor.checkForTvShowInDB()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    view?.setFloatingActionButton(it)
+                }
 
         interactor.retrieveEpisodes()
                 .map {
@@ -28,6 +32,7 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
                     val next = it.episodes.firstOrNull { it.datetime > now }
                     Pair(makeEpisodeNumber(latest),makeEpisodeNumber(next))
                 }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     view?.writeEpisodes(it.first,it.second)
@@ -42,8 +47,21 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
         }
     }
 
-    override fun onFabClicked() {
-        interactor.saveTvShow()
-        view?.setFloatingActionButton(interactor.tvShowExistsInDb)
+    override fun onFabClicked(tvShowInDB: TvShowInDB) {
+        view?.enableFloatingActionProgress()
+        val observable: Observable<TvShowInDB>
+        when (tvShowInDB) {
+            TvShowInDB.NOT_IN_DB ->
+                observable = interactor.saveTvShow()
+            TvShowInDB.IN_DB ->
+                observable = interactor.deleteTvShow()
+        }
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    view?.setFloatingActionButton(it)
+                    view?.disableFloatingActionProgress()
+                }
+
     }
 }
