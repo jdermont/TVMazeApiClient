@@ -3,12 +3,12 @@ package omg.jd.tvmazeapiclient.components.details
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.*
+import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.TvShowInDB
 import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.utils.DateTimeUtils
 import omg.jd.tvmazeapiclient.utils.StringUtils
 import org.joda.time.DateTime
-
 
 class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Presenter {
     override var view: MVPDetails.View? = null
@@ -28,9 +28,10 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
         interactor.retrieveEpisodes()
                 .map {
                     val now = DateTime.now()
-                    val latest = it.episodes.lastOrNull { it.datetime <= now }
-                    val next = it.episodes.firstOrNull { it.datetime > now }
-                    Pair(makeEpisodeNumber(latest),makeEpisodeNumber(next))
+                    val latestEpisode = it.episodes.lastOrNull { it.datetime <= now }
+                    val nextEpisode = it.episodes.firstOrNull { it.datetime > now }
+                    val str = if (nextEpisode == null) "" else " (${DateTimeUtils.getDateString(nextEpisode.datetime)})"
+                    Pair(makeEpisodeNumber(latestEpisode),makeEpisodeNumber(nextEpisode)+str)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -1,6 +1,5 @@
 package omg.jd.tvmazeapiclient.components.details
 
-import android.os.SystemClock
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.TvShowInDB
@@ -28,7 +27,6 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     override fun checkForTvShowInDB(): Observable<TvShowInDB> {
         return Observable.fromCallable {
-            SystemClock.sleep(500)
             val inDb = SQLite.select().from(DbFlowTvShow::class.java)
                     .where(DbFlowTvShow_Table.id.eq(tvShow.id))
                     .querySingle() != null
@@ -55,7 +53,6 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     override fun saveTvShow(): Observable<TvShowInDB> {
         return Observable.fromCallable {
-            SystemClock.sleep(500)
             val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
             tvShowDbFlow.saveInTransation()
             TvShowInDB.IN_DB
@@ -64,7 +61,6 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     override fun deleteTvShow(): Observable<TvShowInDB> {
         return Observable.fromCallable {
-            SystemClock.sleep(500)
             val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
             tvShowDbFlow.deleteInTransaction()
             TvShowInDB.NOT_IN_DB

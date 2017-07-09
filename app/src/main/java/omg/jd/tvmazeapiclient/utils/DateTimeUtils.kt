@@ -9,12 +9,22 @@ object DateTimeUtils {
 
     val INVALID_DATETIME = DateTime(0, DateTimeZone.UTC)
 
-    private val formatter: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+    private val episodeDateTimeFormatter: DateTimeFormatter by lazy {
+        DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+    }
+
+    private val printDateTimeFormatter: DateTimeFormatter by lazy {
+        DateTimeFormat.forPattern("yyyy-MM-dd")
+    }
 
     fun getEpisodeDateTime(airstamp: String?): DateTime {
         if (airstamp == null) {
             return INVALID_DATETIME
         }
-        return formatter.parseDateTime(airstamp)
+        return episodeDateTimeFormatter.parseDateTime(airstamp)
+    }
+
+    fun getDateString(dateTime: DateTime): String {
+        return printDateTimeFormatter.print(dateTime)
     }
 }
