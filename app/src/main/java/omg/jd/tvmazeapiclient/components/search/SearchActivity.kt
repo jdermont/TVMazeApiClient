@@ -23,7 +23,6 @@ import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 
-
 class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPSearch.View,
         SearchItemsAdapter.ViewHolderOnClickListener {
 
@@ -91,8 +90,7 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
             R.id.action_search ->
                 // Not implemented here
                 return false
-            else -> {
-            }
+            else -> { }
         }
         searchView?.setOnQueryTextListener(queryTextListener)
         return super.onOptionsItemSelected(item)
@@ -106,7 +104,7 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
     override fun setShows(shows: List<TvShow>) {
         adapter.updateList(shows)
         if (shows.isEmpty()) {
-            setEmpty()
+            setNotFound()
         } else {
             searchMultiStateView.viewState = MultiStateView.VIEW_STATE_CONTENT
         }
@@ -118,6 +116,10 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
 
     override fun setEmpty() {
         searchMultiStateView.viewState = MultiStateView.VIEW_STATE_EMPTY
+    }
+
+    override fun setNotFound() {
+        searchMultiStateView.viewState = MultiStateView.VIEW_STATE_ERROR
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPSearch.Presenter> {

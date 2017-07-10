@@ -1,10 +1,15 @@
 package omg.jd.tvmazeapiclient.components.main
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.content.Loader
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import omg.jd.tvmazeapiclient.BaseActivity
@@ -22,10 +27,6 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val intent = Intent(this,SearchActivity::class.java)
-        startActivity(intent)
-        finish()
         setContentView(R.layout.activity_main)
         setSupportActionBar(mainToolbar)
 
@@ -38,13 +39,30 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
         mainRecyclerView.adapter = adapter
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_search_for_tvshow -> {
+                val intent = Intent(applicationContext,SearchActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> { }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPMain.Presenter> {
         return PresenterLoader(applicationContext, MainPresenterFactory())
     }
 
-    override fun onLoadFinished(loader: Loader<MVPMain.Presenter>?, presenter: MVPMain.Presenter) {
-        super.onLoadFinished(loader, presenter)
-        presenter.onInit()
+    override fun onResume() {
+        super.onResume()
+        presenter?.onResume()
     }
 
     override fun setLoading() {

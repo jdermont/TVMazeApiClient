@@ -4,4 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:text="EMPTY"/>
+    android:gravity="center"
+    android:layout_margin="@dimen/global_double_margin"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    android:text="@string/tv_show_not_found"/>

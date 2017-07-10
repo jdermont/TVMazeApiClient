@@ -31,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:msv_loadingView="@layout/state_loading"
-            app:msv_emptyView="@layout/state_empty"
-            app:msv_errorView="@layout/state_error"
-            app:msv_viewState="content">
+            app:msv_emptyView="@layout/search_state_empty"
+            app:msv_errorView="@layout/search_state_not_found"
+            app:msv_viewState="empty">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/searchRecyclerView"

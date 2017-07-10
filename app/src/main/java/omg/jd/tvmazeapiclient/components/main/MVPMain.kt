@@ -11,7 +11,7 @@ interface MVPMain {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onInit()
+        fun onResume()
     }
 
     interface View : BaseView {
