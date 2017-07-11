@@ -15,4 +15,8 @@
     <string name="main_list_empty">The list is empty. Tap on menu, search for some TV show and save it.</string>
     <string name="search_list_empty">List is empty. Tap on search and type TV show\'s name.</string>
     <string name="tv_show_not_found">TV show not found.</string>
+    <string name="sort_by">Sort by</string>
+    <string name="title">Title</string>
+    <string name="premiered">Premiered</string>
+    <string name="next_episode">Next Episode</string>
 </resources>

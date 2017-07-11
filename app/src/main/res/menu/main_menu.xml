@@ -2,6 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_sort_by"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/sort_by">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/action_sort_by_default" android:title="@string/title" />
+                <item android:id="@+id/action_sort_by_premiered" android:title="@string/premiered" />
+                <item android:id="@+id/action_sort_by_next_episode" android:title="@string/next_episode" />
+            </group>
+        </menu>
+    </item>
+    <item
         android:id="@+id/action_search_for_tvshow"
         android:title="Search for TV Show"
         app:showAsAction="never" />

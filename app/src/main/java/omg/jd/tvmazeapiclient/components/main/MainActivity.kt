@@ -1,12 +1,9 @@
 package omg.jd.tvmazeapiclient.components.main
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.content.Loader
-import android.support.v7.widget.SearchView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -14,7 +11,7 @@ import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.components.details.MVPDetails
+import omg.jd.tvmazeapiclient.components.main.MVPMain.Interactor.SORT_BY
 import omg.jd.tvmazeapiclient.components.main.recyclerview.MainItemsAdapter
 import omg.jd.tvmazeapiclient.components.search.SearchActivity
 import omg.jd.tvmazeapiclient.entity.TvShow
@@ -24,6 +21,8 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
     override var presenter: MVPMain.Presenter? = null
 
     val adapter: MainItemsAdapter = MainItemsAdapter()
+
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,10 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        super.onCreateOptionsMenu(menu)
+        this.menu = menu
+        presenter?.onMenuCreated()
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -51,9 +53,23 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
                 startActivity(intent)
                 return true
             }
+            R.id.action_sort_by_default -> presenter?.sortBy(SORT_BY.DEFAULT)
+            R.id.action_sort_by_premiered -> presenter?.sortBy(SORT_BY.PREMIERED)
+            R.id.action_sort_by_next_episode -> presenter?.sortBy(SORT_BY.NEXT_EPISODE)
             else -> { }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun checkSortBy(sortBy: SORT_BY) {
+        val itemId: Int
+        when (sortBy) {
+            MVPMain.Interactor.SORT_BY.DEFAULT -> itemId = R.id.action_sort_by_default
+            MVPMain.Interactor.SORT_BY.PREMIERED -> itemId = R.id.action_sort_by_premiered
+            MVPMain.Interactor.SORT_BY.NEXT_EPISODE -> itemId = R.id.action_sort_by_next_episode
+        }
+        val item: MenuItem? = menu?.findItem(itemId)
+        item?.isChecked = true
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPMain.Presenter> {

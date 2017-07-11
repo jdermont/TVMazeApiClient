@@ -24,7 +24,7 @@ data class TvShow(val id: Long = 0,
                   val summary: String?,
                   val updated: Long = 0,
                   val links: Links?,
-                  var episodes: List<Episode>) : Parcelable {
+                  var episodes: List<Episode>) : Parcelable, Comparable<TvShow> {
 
     companion object {
         @JvmField val CREATOR = PaperParcelTvShow.CREATOR
@@ -34,6 +34,16 @@ data class TvShow(val id: Long = 0,
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         PaperParcelTvShow.writeToParcel(this, dest, flags)
+    }
+
+    override fun compareTo(other: TvShow): Int {
+        if (name == null) {
+            return if (other.name == null) 0 else 1
+        } else if (other.name == null) {
+            return -1
+        } else {
+            return name.compareTo(other.name)
+        }
     }
 
 }
