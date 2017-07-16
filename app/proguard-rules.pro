@@ -23,3 +23,43 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# OKHttp3
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
+# Joda Time
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }
+
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keepclasseswithmembers interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# DbFlow
+-keep class com.raizlabs.android.dbflow.** { *; }
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
+-keep class com.raizlabs.android.dbflow.config.GeneratedDatabaseHolder
+-keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }
+
+# Misc
+-keep class android.support.v7.widget.SearchView { *; }
+-dontwarn kotlin.**
+
+
+# TV Maze Api Client
+-keep class omg.jd.tvmazeapiclient.ws.model.** { *; }

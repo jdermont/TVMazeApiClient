@@ -37,7 +37,7 @@ class DbEntityConverterTest {
         Assert.assertEquals(dbTvShow.updated, tvShow.updated)
         assertLinksEquals(dbTvShow.links!!, tvShow.links!!)
         for (i in 0..dbTvShow.episodes!!.size-1) {
-            assertEpisodeEquals(dbTvShow.episodes!![i],tvShow.episodes!![i])
+            assertEpisodeEquals(dbTvShow.episodes!![i],tvShow.episodes[i])
         }
     }
 
@@ -67,7 +67,7 @@ class DbEntityConverterTest {
         Assert.assertEquals(dbTvShow.updated, tvShow.updated)
         assertLinksEquals(dbTvShow.links!!, tvShow.links!!)
         for (i in 0..dbTvShow.episodes!!.size-1) {
-            assertEpisodeEquals(dbTvShow.episodes!![i],tvShow.episodes!![i])
+            assertEpisodeEquals(dbTvShow.episodes!![i],tvShow.episodes[i])
         }
     }
 
