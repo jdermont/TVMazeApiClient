@@ -10,54 +10,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/cell_height"
-        android:orientation="horizontal"
-        android:background="@drawable/item_background">
-
-        <ImageView
-            android:id="@+id/mainItemImage"
-            android:transitionName="@string/transition_image"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/global_margin"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/sample_picture"
-            android:contentDescription="@string/tv_show_image"/>
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:minHeight="@dimen/cell_height"
+            android:orientation="horizontal"
+            android:background="@drawable/item_background">
 
-            <TextView
-                android:id="@+id/mainItemTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/global_margin"
-                android:maxLines="1"
-                android:ellipsize="end"
-                tools:text="The Big Bang Theory"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <ImageView
+                android:id="@+id/mainItemImage"
+                android:transitionName="@string/transition_image"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/global_margin"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/sample_picture"
+                android:contentDescription="@string/tv_show_image"/>
 
-            <TextView
-                android:id="@+id/mainItemDescription"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/global_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                tools:text="Premiered: 2007-01-13\nType: Scripted\nStatus: Running\nRating: 8.0"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/mainItemGenres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/global_margin"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                tools:text="Genres: Action, Adventure, Sci-fi"/>
+                <TextView
+                    android:id="@+id/mainItemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/global_margin"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="The Big Bang Theory"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                <TextView
+                    android:id="@+id/mainItemDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/global_margin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:text="Status: Running\nRating: 8.0\nLatest episode: 10x01\nNext episode: 10x02 (2017-10-01)\nNext episode in 48 days"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#E0E0E0"
+            android:minHeight="24dp">
+
+
 
         </LinearLayout>
 

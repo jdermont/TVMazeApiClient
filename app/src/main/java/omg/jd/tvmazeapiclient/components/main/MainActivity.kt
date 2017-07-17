@@ -11,7 +11,7 @@ import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.components.main.MVPMain.Interactor.SORT_BY
+import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.components.main.recyclerview.MainItemsAdapter
 import omg.jd.tvmazeapiclient.components.search.SearchActivity
 import omg.jd.tvmazeapiclient.entity.TvShow
@@ -64,9 +64,9 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
     override fun checkSortBy(sortBy: SORT_BY) {
         val itemId: Int
         when (sortBy) {
-            MVPMain.Interactor.SORT_BY.DEFAULT -> itemId = R.id.action_sort_by_default
-            MVPMain.Interactor.SORT_BY.PREMIERED -> itemId = R.id.action_sort_by_premiered
-            MVPMain.Interactor.SORT_BY.NEXT_EPISODE -> itemId = R.id.action_sort_by_next_episode
+            SORT_BY.DEFAULT -> itemId = R.id.action_sort_by_default
+            SORT_BY.PREMIERED -> itemId = R.id.action_sort_by_premiered
+            SORT_BY.NEXT_EPISODE -> itemId = R.id.action_sort_by_next_episode
         }
         val item: MenuItem? = menu?.findItem(itemId)
         item?.isChecked = true

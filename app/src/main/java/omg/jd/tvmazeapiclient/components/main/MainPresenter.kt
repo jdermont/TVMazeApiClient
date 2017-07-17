@@ -2,7 +2,7 @@ package omg.jd.tvmazeapiclient.components.main
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import omg.jd.tvmazeapiclient.components.main.MVPMain.Interactor.SORT_BY
+import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 
 class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
     override var view: MVPMain.View? = null
