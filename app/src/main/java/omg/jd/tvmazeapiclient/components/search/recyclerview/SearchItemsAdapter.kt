@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 
-class SearchItemsAdapter(val clickListener: ViewHolderOnClickListener?) : RecyclerView.Adapter<SearchItemViewHolder>() {
+class SearchItemsAdapter(val clickListener: TvShowViewHolder.ViewHolderOnClickListener?) : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     val showList: ArrayList<TvShow> = ArrayList()
 
@@ -30,7 +31,4 @@ class SearchItemsAdapter(val clickListener: ViewHolderOnClickListener?) : Recycl
         notifyDataSetChanged()
     }
 
-    interface ViewHolderOnClickListener {
-        fun onClick(viewHolder: SearchItemViewHolder)
-    }
 }

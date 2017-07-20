@@ -3,24 +3,29 @@ package omg.jd.tvmazeapiclient.components.main
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.Loader
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.kennyc.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
+import omg.jd.tvmazeapiclient.components.details.DetailsActivity
 import omg.jd.tvmazeapiclient.components.main.recyclerview.MainItemsAdapter
 import omg.jd.tvmazeapiclient.components.search.SearchActivity
+import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 
-class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.View {
+class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.View, TvShowViewHolder.ViewHolderOnClickListener {
     override var presenter: MVPMain.Presenter? = null
 
-    val adapter: MainItemsAdapter = MainItemsAdapter()
+    val adapter: MainItemsAdapter = MainItemsAdapter(this)
 
     private var menu: Menu? = null
 
@@ -73,7 +78,7 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<MVPMain.Presenter> {
-        return PresenterLoader(applicationContext, MainPresenterFactory())
+        return PresenterLoader(applicationContext, MainPresenterFactory(PreferenceManager.getDefaultSharedPreferences(applicationContext)))
     }
 
     override fun onResume() {
@@ -96,5 +101,16 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
         } else {
             mainMultiStateView.viewState = MultiStateView.VIEW_STATE_CONTENT
         }
+    }
+
+    override fun onItemClick(viewHolder: TvShowViewHolder) {
+        presenter?.onItemClick(viewHolder)
+    }
+
+    override fun showDetails(show: TvShow, transitedView: View) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, show)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
+        startActivity(intent, options.toBundle())
     }
 }

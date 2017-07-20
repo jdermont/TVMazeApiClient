@@ -1,7 +1,7 @@
 package omg.jd.tvmazeapiclient.components.details
 
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.BasePresenter
 import omg.jd.tvmazeapiclient.mvp.BaseView
@@ -12,21 +12,14 @@ interface MVPDetails {
 
         fun setTvShowIfNeeded(tvShow: TvShow)
         fun retrieveEpisodes(): Observable<TvShow>
-        fun saveTvShow(): Observable<Presenter.TvShowInDB>
-        fun deleteTvShow(): Observable<Presenter.TvShowInDB>
-        fun checkForTvShowInDB(): Observable<Presenter.TvShowInDB>
+        fun saveTvShow(): Observable<MainDatabase.TvShowInDB>
+        fun deleteTvShow(): Observable<MainDatabase.TvShowInDB>
+        fun checkForTvShowInDB(): Observable<MainDatabase.TvShowInDB>
     }
 
     interface Presenter : BasePresenter<View> {
-        enum class TvShowInDB {
-            NOT_IN_DB, IN_DB;
-            companion object {
-                fun valueOf(inDb: Boolean): TvShowInDB = if (inDb) IN_DB else NOT_IN_DB
-            }
-        }
-
         fun onInit(tvShow: TvShow)
-        fun onFabClicked(tvShowInDB: TvShowInDB)
+        fun onFabClicked(tvShowInDB: MainDatabase.TvShowInDB)
     }
 
     interface View : BaseView {
@@ -34,7 +27,7 @@ interface MVPDetails {
         fun setupViews(tvShow: TvShow)
         fun enableFloatingActionProgress()
         fun disableFloatingActionProgress()
-        fun setFloatingActionButton(tvShowInDB: Presenter.TvShowInDB)
+        fun setFloatingActionButton(tvShowInDB: MainDatabase.TvShowInDB)
         fun writeEpisodes(latest: String, next: String)
     }
 }

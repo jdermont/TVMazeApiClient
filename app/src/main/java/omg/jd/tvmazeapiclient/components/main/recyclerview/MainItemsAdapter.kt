@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 
-class MainItemsAdapter : RecyclerView.Adapter<MainItemViewHolder>() {
+class MainItemsAdapter(val clickListener: TvShowViewHolder.ViewHolderOnClickListener?) : RecyclerView.Adapter<MainItemViewHolder>() {
 
     val showList: ArrayList<TvShow> = ArrayList()
 
@@ -20,7 +21,7 @@ class MainItemsAdapter : RecyclerView.Adapter<MainItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MainItemViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.main_item, parent, false)
-        return MainItemViewHolder(view)
+        return MainItemViewHolder(view, clickListener)
     }
 
     // TODO: use DiffUtil
@@ -29,5 +30,4 @@ class MainItemsAdapter : RecyclerView.Adapter<MainItemViewHolder>() {
         this.showList.addAll(showList)
         notifyDataSetChanged()
     }
-
 }

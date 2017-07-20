@@ -1,32 +1,35 @@
 package omg.jd.tvmazeapiclient.components.main
 
-import com.raizlabs.android.dbflow.sql.language.SQLite
+import android.content.SharedPreferences
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.EntityUtils
 import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
-import omg.jd.tvmazeapiclient.entity.convertToTvShowEntity
+import omg.jd.tvmazeapiclient.getSortBy
+import omg.jd.tvmazeapiclient.putSortBy
 
-class MainInteractor : MVPMain.Interactor {
+class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
 
-    override var sortBy: SORT_BY = SORT_BY.DEFAULT
+    override var sortBy: SORT_BY = pref.getSortBy()
+    override val needToReload: Boolean
+        get() = MainDatabase.dbChanged || !initialized
 
     private lateinit var cachedShowList: List<TvShow>
+    private var initialized: Boolean = false
 
     override fun loadShowList(): Observable<List<TvShow>> {
-        return Observable.fromCallable {
-            SQLite.select().from(DbFlowTvShow::class.java)
-                    .queryList()
-        }
-                .map {
-                    EntityUtils.sorted(it.map { it.convertToTvShowEntity() }, sortBy)
+        return MainDatabase.loadShowList()
+                .map { EntityUtils.sorted(it, sortBy) }
+                .doOnNext {
+                    initialized = true
+                    cachedShowList = it
                 }
-                .doOnNext { cachedShowList = it }
     }
 
     override fun sortShowList(sortBy: SORT_BY): List<TvShow> {
         this.sortBy = sortBy
+        pref.putSortBy(sortBy)
         cachedShowList = EntityUtils.sorted(cachedShowList, sortBy)
         return cachedShowList
     }

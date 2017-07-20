@@ -2,8 +2,8 @@ package omg.jd.tvmazeapiclient.components.search
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolder
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 
 class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presenter {
@@ -31,7 +31,7 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
                 )
     }
 
-    override fun onItemClick(viewHolder: SearchItemViewHolder) {
+    override fun onItemClick(viewHolder: TvShowViewHolder) {
         view?.showDetails(viewHolder.data as TvShow, viewHolder.transitedView)
     }
 

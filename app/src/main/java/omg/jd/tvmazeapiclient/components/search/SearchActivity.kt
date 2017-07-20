@@ -22,9 +22,10 @@ import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemViewHolde
 import omg.jd.tvmazeapiclient.components.search.recyclerview.SearchItemsAdapter
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 
 class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPSearch.View,
-        SearchItemsAdapter.ViewHolderOnClickListener {
+        TvShowViewHolder.ViewHolderOnClickListener {
 
     companion object {
         const val SEARCH_TEXT_KEY = "SEARCH_TEXT_KEY"
@@ -126,7 +127,7 @@ class SearchActivity : BaseActivity<MVPSearch.View, MVPSearch.Presenter>(), MVPS
         return PresenterLoader(applicationContext, SearchPresenterFactory())
     }
 
-    override fun onClick(viewHolder: SearchItemViewHolder) {
+    override fun onItemClick(viewHolder: TvShowViewHolder) {
         presenter?.onItemClick(viewHolder)
     }
 

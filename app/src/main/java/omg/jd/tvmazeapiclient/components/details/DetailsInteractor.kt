@@ -2,12 +2,9 @@ package omg.jd.tvmazeapiclient.components.details
 
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.TvShowInDB
-import omg.jd.tvmazeapiclient.db.dbflow.utils.deleteInTransaction
-import omg.jd.tvmazeapiclient.db.dbflow.utils.saveInTransation
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
 import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow_Table
-import omg.jd.tvmazeapiclient.db.model.convertToTvShowDbFlow
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.ws.ApiClient
 import omg.jd.tvmazeapiclient.ws.model.convertToEpisodesListEntity
@@ -25,12 +22,12 @@ class DetailsInteractor : MVPDetails.Interactor {
         }
     }
 
-    override fun checkForTvShowInDB(): Observable<TvShowInDB> {
+    override fun checkForTvShowInDB(): Observable<MainDatabase.TvShowInDB> {
         return Observable.fromCallable {
             val inDb = SQLite.select().from(DbFlowTvShow::class.java)
                     .where(DbFlowTvShow_Table.id.eq(tvShow.id))
                     .querySingle() != null
-            TvShowInDB.valueOf(inDb)
+            MainDatabase.TvShowInDB.valueOf(inDb)
         }
     }
 
@@ -51,20 +48,12 @@ class DetailsInteractor : MVPDetails.Interactor {
         return observable
     }
 
-    override fun saveTvShow(): Observable<TvShowInDB> {
-        return Observable.fromCallable {
-            val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
-            tvShowDbFlow.saveInTransation()
-            TvShowInDB.IN_DB
-        }
+    override fun saveTvShow(): Observable<MainDatabase.TvShowInDB> {
+        return MainDatabase.saveTvShow(tvShow)
     }
 
-    override fun deleteTvShow(): Observable<TvShowInDB> {
-        return Observable.fromCallable {
-            val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
-            tvShowDbFlow.deleteInTransaction()
-            TvShowInDB.NOT_IN_DB
-        }
+    override fun deleteTvShow(): Observable<MainDatabase.TvShowInDB> {
+        return MainDatabase.deleteTvShow(tvShow)
     }
 
 }

@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_details.*
 import omg.jd.tvmazeapiclient.BaseActivity
 import omg.jd.tvmazeapiclient.R
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.utils.ScreenHelper.ToolbarState
@@ -70,7 +70,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
             }
         })
         detailsFloatingActionButton.setOnClickListener {
-            presenter?.onFabClicked(detailsFloatingActionButton.tag as MVPDetails.Presenter.TvShowInDB)
+            presenter?.onFabClicked(detailsFloatingActionButton.tag as MainDatabase.TvShowInDB)
         }
     }
 
@@ -103,16 +103,16 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
         detailsSummaryText.text = StringUtils.fromHtmlCompat(tvShow.summary)
     }
 
-    override fun setFloatingActionButton(tvShowInDB: MVPDetails.Presenter.TvShowInDB) {
+    override fun setFloatingActionButton(tvShowInDB: MainDatabase.TvShowInDB) {
         if (detailsFABOverlay.visibility == View.INVISIBLE) {
             detailsFABOverlay.visibility = View.VISIBLE
             val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
             detailsFABOverlay.startAnimation(animation)
         }
         when (tvShowInDB) {
-            MVPDetails.Presenter.TvShowInDB.IN_DB ->
+            MainDatabase.TvShowInDB.IN_DB ->
                 detailsFloatingActionButton.setImageResource(R.drawable.ic_delete_white_24dp)
-            MVPDetails.Presenter.TvShowInDB.NOT_IN_DB ->
+            MainDatabase.TvShowInDB.NOT_IN_DB ->
                 detailsFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp)
         }
         detailsFloatingActionButton.tag = tvShowInDB

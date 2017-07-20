@@ -6,6 +6,7 @@ import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.BasePresenter
 import omg.jd.tvmazeapiclient.mvp.BaseView
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 import omg.jd.tvmazeapiclient.ws.model.WsTVShow
 
 interface MVPSearch {
@@ -15,7 +16,7 @@ interface MVPSearch {
 
     interface Presenter : BasePresenter<View> {
         fun onSearch(input: String)
-        fun onItemClick(viewHolder: SearchItemViewHolder)
+        fun onItemClick(viewHolder: TvShowViewHolder)
     }
 
     interface View : BaseView {

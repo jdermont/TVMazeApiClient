@@ -6,24 +6,24 @@ import android.view.View
 import kotlinx.android.synthetic.main.search_item.view.*
 import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
 import omg.jd.tvmazeapiclient.utils.loadUrl
 
-class SearchItemViewHolder(itemView: View, clickListener: SearchItemsAdapter.ViewHolderOnClickListener?) : RecyclerView.ViewHolder(itemView) {
+class SearchItemViewHolder(itemView: View, clickListener: ViewHolderOnClickListener?) : TvShowViewHolder(itemView, clickListener) {
     init {
         if (clickListener != null) {
             itemView.setOnClickListener {
-                clickListener.onClick(this)
+                clickListener.onItemClick(this)
             }
         }
     }
 
-    val transitedView: View = itemView.searchItemImage
-    var data: Any? = null
+    override val transitedView: View = itemView.searchItemImage
 
     val resources: Resources = itemView.resources
 
-    fun updateView(tvShow: TvShow) {
-        data = tvShow
+    override fun updateView(tvShow: TvShow) {
+        super.updateView(tvShow)
         itemView.searchItemImage.loadUrl(tvShow.originalImage, R.drawable.placeholder)
         itemView.searchItemTitle.text = tvShow.name
         itemView.searchItemDescription.text = resources.getString(

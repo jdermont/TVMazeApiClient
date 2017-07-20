@@ -3,8 +3,7 @@ package omg.jd.tvmazeapiclient.components.details
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import omg.jd.tvmazeapiclient.components.details.MVPDetails.Presenter.TvShowInDB
-import omg.jd.tvmazeapiclient.entity.Episode
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.utils.DateTimeUtils
 import omg.jd.tvmazeapiclient.utils.StringUtils
@@ -31,7 +30,7 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
                     val latestEpisode = it.episodes.lastOrNull { it.datetime <= now }
                     val nextEpisode = it.episodes.firstOrNull { it.datetime > now }
                     val str = if (nextEpisode == null) "" else " (${DateTimeUtils.getDateString(nextEpisode.datetime)})"
-                    Pair(makeEpisodeNumber(latestEpisode),makeEpisodeNumber(nextEpisode)+str)
+                    Pair(StringUtils.makeEpisodeNumber(latestEpisode),StringUtils.makeEpisodeNumber(nextEpisode)+str)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,21 +39,13 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
                 }
     }
 
-    private fun makeEpisodeNumber(episode: Episode?): String {
-        if (episode == null) {
-            return "-"
-        } else {
-            return "${StringUtils.startPadZero(episode.season)}x${StringUtils.startPadZero(episode.number)}"
-        }
-    }
-
-    override fun onFabClicked(tvShowInDB: TvShowInDB) {
+    override fun onFabClicked(tvShowInDB: MainDatabase.TvShowInDB) {
         view?.enableFloatingActionProgress()
-        val observable: Observable<TvShowInDB>
+        val observable: Observable<MainDatabase.TvShowInDB>
         when (tvShowInDB) {
-            TvShowInDB.NOT_IN_DB ->
+            MainDatabase.TvShowInDB.NOT_IN_DB ->
                 observable = interactor.saveTvShow()
-            TvShowInDB.IN_DB ->
+            MainDatabase.TvShowInDB.IN_DB ->
                 observable = interactor.deleteTvShow()
         }
         observable.subscribeOn(Schedulers.io())

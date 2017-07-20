@@ -3,6 +3,7 @@ package omg.jd.tvmazeapiclient.components.details
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
+import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.ws.model.convertToEpisodeEntity
 import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.utils.createEpisode
@@ -46,12 +47,12 @@ class DetailsPresenterTest {
         val tvShowWithEpisodes = tvShow.copy(
                 episodes = listOf(
                         createEpisode(id = 0, name = "Pilot 1").convertToEpisodeEntity(),
-                        createEpisode(id = 0, name = "Pilot 2").convertToEpisodeEntity()
+                        createEpisode(id = 1, name = "Pilot 2").convertToEpisodeEntity()
                 )
         )
         val episodesObservable = Observable.just(tvShowWithEpisodes)
         `when`(interactor.retrieveEpisodes()).thenReturn(episodesObservable)
-        val existsInDbObservable = Observable.just(MVPDetails.Presenter.TvShowInDB.NOT_IN_DB)
+        val existsInDbObservable = Observable.just(MainDatabase.TvShowInDB.NOT_IN_DB)
         `when`(interactor.checkForTvShowInDB()).thenReturn(existsInDbObservable)
         presenter.onInit(tvShow)
 
