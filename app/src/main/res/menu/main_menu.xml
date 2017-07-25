@@ -16,6 +16,7 @@
     </item>
     <item
         android:id="@+id/action_search_for_tvshow"
-        android:title="Search for TV Show"
-        app:showAsAction="never" />
+        android:title="@string/search_for_tv_show"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_search_white_24dp"/>
 </menu>

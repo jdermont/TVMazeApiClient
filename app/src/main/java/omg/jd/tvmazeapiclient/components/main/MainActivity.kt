@@ -56,7 +56,6 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
             R.id.action_search_for_tvshow -> {
                 val intent = Intent(applicationContext,SearchActivity::class.java)
                 startActivity(intent)
-                return true
             }
             R.id.action_sort_by_default -> presenter?.sortBy(SORT_BY.DEFAULT)
             R.id.action_sort_by_premiered -> presenter?.sortBy(SORT_BY.PREMIERED)

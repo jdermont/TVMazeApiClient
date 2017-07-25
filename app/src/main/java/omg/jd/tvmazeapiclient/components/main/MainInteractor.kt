@@ -18,7 +18,7 @@ class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
     private lateinit var cachedShowList: List<TvShow>
     private var initialized: Boolean = false
 
-    override fun loadShowList(): Observable<List<TvShow>> {
+    override fun loadFromDbShowList(): Observable<List<TvShow>> {
         return MainDatabase.loadShowList()
                 .map { EntityUtils.sorted(it, sortBy) }
                 .doOnNext {
@@ -31,6 +31,10 @@ class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
         this.sortBy = sortBy
         pref.putSortBy(sortBy)
         cachedShowList = EntityUtils.sorted(cachedShowList, sortBy)
+        return cachedShowList
+    }
+
+    override fun getShowList(): List<TvShow> {
         return cachedShowList
     }
 

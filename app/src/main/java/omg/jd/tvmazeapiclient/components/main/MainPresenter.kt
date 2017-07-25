@@ -12,12 +12,14 @@ class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
     override fun onResume() {
         if (interactor.needToReload) {
             view?.setLoading()
-            interactor.loadShowList()
+            interactor.loadFromDbShowList()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
                         view?.setShows(it)
                     }
+        } else {
+            view?.setShows(interactor.getShowList())
         }
     }
 

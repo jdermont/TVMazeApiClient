@@ -13,8 +13,9 @@ interface MVPMain {
         var sortBy: EntityUtils.SORT_BY
         val needToReload: Boolean
 
-        fun loadShowList(): Observable<List<TvShow>>
+        fun loadFromDbShowList(): Observable<List<TvShow>>
         fun sortShowList(sortBy: EntityUtils.SORT_BY): List<TvShow>
+        fun getShowList(): List<TvShow>
     }
 
     interface Presenter : BasePresenter<View> {

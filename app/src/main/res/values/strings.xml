@@ -24,4 +24,5 @@
     <string name="title">Title</string>
     <string name="premiered">Premiered</string>
     <string name="next_episode">Next Episode</string>
+    <string name="search_for_tv_show">Search for TV Show</string>
 </resources>
