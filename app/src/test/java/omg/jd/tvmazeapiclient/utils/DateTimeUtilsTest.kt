@@ -31,4 +31,10 @@ class DateTimeUtilsTest {
         val dateTime = DateTimeUtils.getEpisodeDateTime(null)
         Assert.assertEquals(DateTimeUtils.INVALID_DATETIME,dateTime)
     }
+
+    @Test
+    fun getDateStringTest() {
+        val dateTime = DateTime(2007,9,25,0,30,0,0,DateTimeZone.UTC)
+        Assert.assertEquals("2007-09-25",DateTimeUtils.getDateString(dateTime))
+    }
 }

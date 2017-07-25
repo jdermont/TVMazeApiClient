@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.components.details
 
 import com.nhaarman.mockito_kotlin.verify
+import com.raizlabs.android.dbflow.kotlinextensions.delete
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
 import omg.jd.tvmazeapiclient.db.MainDatabase
@@ -59,5 +60,31 @@ class DetailsPresenterTest {
         verify(interactor).setTvShowIfNeeded(tvShow)
         verify(view).loadImageHeader(tvShow.originalImage)
         verify(view).setupViews(tvShow)
+    }
+
+    @Test
+    fun testOnFabClickedSave() {
+        val inDB = MainDatabase.TvShowInDB.IN_DB
+        val observable = Observable.just(inDB)
+        `when`(interactor.saveTvShow()).thenReturn(observable)
+
+        presenter.onFabClicked(MainDatabase.TvShowInDB.NOT_IN_DB)
+        verify(view).enableFloatingActionProgress()
+        verify(interactor).saveTvShow()
+        verify(view).setFloatingActionButton(inDB)
+        verify(view).disableFloatingActionProgress()
+    }
+
+    @Test
+    fun testOnFabClickedDelete() {
+        val notInDB = MainDatabase.TvShowInDB.NOT_IN_DB
+        val observable = Observable.just(notInDB)
+        `when`(interactor.deleteTvShow()).thenReturn(observable)
+
+        presenter.onFabClicked(MainDatabase.TvShowInDB.IN_DB)
+        verify(view).disableFloatingActionProgress()
+        verify(interactor).deleteTvShow()
+        verify(view).setFloatingActionButton(notInDB)
+        verify(view).enableFloatingActionProgress()
     }
 }

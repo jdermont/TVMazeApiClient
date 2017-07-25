@@ -34,6 +34,4 @@ class SearchPresenter(val interactor: MVPSearch.Interactor) : MVPSearch.Presente
     override fun onItemClick(viewHolder: TvShowViewHolder) {
         view?.showDetails(viewHolder.data as TvShow, viewHolder.transitedView)
     }
-
-
 }
