@@ -25,12 +25,10 @@ data class DbFlowTvShow(@PrimaryKey(autoincrement = false) @Column(name = "id") 
                         @Column(name = "mediumImage") var mediumImage: String?,
                         @Column(name = "originalImage") var originalImage: String?,
                         @Column(name = "summary") var summary: String?,
-                        @Column(name = "updated") var updated: Long = 0,
-                        @ForeignKey(tableClass = DbFlowLinks::class, saveForeignKeyModel = true, deleteForeignKeyModel = true)
-                        var links: DbFlowLinks?) : BaseModel() {
+                        @Column(name = "updated") var updated: Long = 0) : BaseModel() {
 
     @Deprecated(message = "Do not use this constructor. This is workaround for DBFlow.")
-    constructor() : this(0L, "", "", "", "", StringList(), "", 0, "", "", StringList(), 0.0, 0, null, "", "", "", 0, null)
+    constructor() : this(0L, "", "", "", "", StringList(), "", 0, "", "", StringList(), 0.0, 0, null, "", "", "", 0)
 
     // workaround for DBFlow's OneToMany and kotlin data class
     private var _episodes: List<DbFlowEpisode>? = null
@@ -38,6 +36,7 @@ data class DbFlowTvShow(@PrimaryKey(autoincrement = false) @Column(name = "id") 
         @OneToMany(methods = arrayOf(OneToMany.Method.ALL), isVariablePrivate = true, variableName = "episodes")
         get() {
             if (_episodes == null) {
+                //_episodes = listOf()
                 _episodes = SQLite.select().from(DbFlowEpisode::class.java)
                         .where(DbFlowEpisode_Table.tvShow_id.eq(this.id))
                         .queryList()

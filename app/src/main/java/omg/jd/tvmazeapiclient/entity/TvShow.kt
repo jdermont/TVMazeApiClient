@@ -23,7 +23,6 @@ data class TvShow(val id: Long = 0,
                   val originalImage: String?,
                   val summary: String?,
                   val updated: Long = 0,
-                  val links: Links?,
                   var episodes: List<Episode>) : Parcelable, Comparable<TvShow> {
 
     companion object {

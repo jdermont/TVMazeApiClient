@@ -10,7 +10,7 @@ interface MVPDetails {
     interface Interactor {
         val tvShow: TvShow
 
-        fun setTvShowIfNeeded(tvShow: TvShow)
+        fun setTvShowIfNeeded(tvShow: TvShow, withEpisodes: Boolean)
         fun retrieveEpisodes(): Observable<TvShow>
         fun saveTvShow(): Observable<MainDatabase.TvShowInDB>
         fun deleteTvShow(): Observable<MainDatabase.TvShowInDB>
@@ -18,7 +18,7 @@ interface MVPDetails {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onInit(tvShow: TvShow)
+        fun onInit(tvShow: TvShow, withEpisodes: Boolean)
         fun onFabClicked(tvShowInDB: MainDatabase.TvShowInDB)
     }
 

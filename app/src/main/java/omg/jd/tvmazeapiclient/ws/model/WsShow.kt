@@ -15,12 +15,10 @@ data class WsShow(val id : Long = 0,
                   val rating : WsRating?,
                   val weight : Int = 0,
                   val network : WsNetwork?,
-                //val webChannel : Any?, // ?
                   val externals : WsExternals?,
                   val image : WsImage?,
                   val summary : String?,
                   val updated : Long = 0,
-                  @SerializedName("_links") val links : LinksDbFlow?,
                   @SerializedName("_embedded") val embedded: WsEmbedded?)
 
 

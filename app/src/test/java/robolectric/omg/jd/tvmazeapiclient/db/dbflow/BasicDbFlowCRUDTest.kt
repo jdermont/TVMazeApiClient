@@ -2,17 +2,12 @@ package robolectric.omg.jd.tvmazeapiclient.db.dbflow
 
 import com.raizlabs.android.dbflow.kotlinextensions.BuildConfig
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import omg.jd.tvmazeapiclient.db.model.DbFlowEpisode
-import omg.jd.tvmazeapiclient.db.model.DbFlowLinks
-import omg.jd.tvmazeapiclient.db.model.DbFlowNetwork
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
+import omg.jd.tvmazeapiclient.db.model.*
 import omg.jd.tvmazeapiclient.utils.createEpisodeList
 import omg.jd.tvmazeapiclient.utils.createShow
 import omg.jd.tvmazeapiclient.utils.createShowList
 import omg.jd.tvmazeapiclient.utils.createShowListWithEpisodes
-import omg.jd.tvmazeapiclient.db.model.convertToEpisodeDbFlow
 import omg.jd.tvmazeapiclient.ws.model.convertToEpisodeEntity
-import omg.jd.tvmazeapiclient.db.model.convertToTvShowDbFlow
 import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import org.junit.Assert
 import org.junit.Before
@@ -86,10 +81,6 @@ class BasicDbFlowCRUDTest {
         val networks = SQLite.select().from(DbFlowNetwork::class.java)
                 .queryList()
         Assert.assertEquals(N-1,networks.size)
-
-        val links = SQLite.select().from(DbFlowLinks::class.java)
-                .queryList()
-        Assert.assertEquals((N-1)*2 + (N-1),links.size) // each tv show and each episode has Links
 
         val episodes = SQLite.select().from(DbFlowEpisode::class.java)
                 .queryList()

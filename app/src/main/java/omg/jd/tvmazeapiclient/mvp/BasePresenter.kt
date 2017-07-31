@@ -1,6 +1,5 @@
 package omg.jd.tvmazeapiclient.mvp
 
-
 interface BasePresenter<T : BaseView> {
     var view : T?
 
@@ -12,7 +11,11 @@ interface BasePresenter<T : BaseView> {
         this.view = null
     }
 
-    fun onDestroyed() {
+    fun onViewDestroyed() {
         this.view = null
+    }
+
+    fun onReset() {
+
     }
 }

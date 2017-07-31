@@ -27,12 +27,20 @@ class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
         view?.checkSortBy(interactor.sortBy)
     }
 
-    override fun sortBy(sortBy: SORT_BY) {
+    override fun onStartSearchComponentClicked() {
+        view?.startSearchComponent()
+    }
+
+    override fun onSortByClicked(sortBy: SORT_BY) {
         view?.setShows(interactor.sortShowList(sortBy))
         view?.checkSortBy(interactor.sortBy)
     }
 
     override fun onItemClick(viewHolder: TvShowViewHolder) {
         view?.showDetails(viewHolder.data as TvShow, viewHolder.transitedView)
+    }
+
+    override fun onReset() {
+        interactor.destroy()
     }
 }

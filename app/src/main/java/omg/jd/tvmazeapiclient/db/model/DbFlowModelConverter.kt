@@ -2,7 +2,6 @@ package omg.jd.tvmazeapiclient.db.model
 
 import omg.jd.tvmazeapiclient.db.dbflow.utils.StringList
 import omg.jd.tvmazeapiclient.entity.Episode
-import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
 import omg.jd.tvmazeapiclient.entity.TvShow
 
@@ -24,8 +23,7 @@ fun TvShow.convertToTvShowDbFlow(): DbFlowTvShow {
             mediumImage = this.mediumImage,
             originalImage = this.originalImage,
             summary = this.summary,
-            updated = this.updated,
-            links = this.links?.convertToLinksDbFlow())
+            updated = this.updated)
     dbFlowTvShow.episodes = this.episodes.map { it.convertToEpisodeDbFlow() }
     return dbFlowTvShow
 }
@@ -36,12 +34,6 @@ fun Network.convertToNetworkDbFlow(): DbFlowNetwork {
             countryCode = this.countryCode,
             countryName = this.countryName,
             countryTimezone = this.countryTimezone)
-}
-
-fun Links.convertToLinksDbFlow(): DbFlowLinks {
-    return DbFlowLinks(self = this.self,
-            previousepisode = this.previousepisode,
-            nextepisode = this.nextepisode)
 }
 
 fun Episode.convertToEpisodeDbFlow(): DbFlowEpisode {
@@ -56,6 +48,5 @@ fun Episode.convertToEpisodeDbFlow(): DbFlowEpisode {
             runtime = this.runtime,
             mediumImage = this.mediumImage,
             originalImage = this.originalImage,
-            summary = this.summary,
-            links = this.links?.convertToLinksDbFlow())
+            summary = this.summary)
 }

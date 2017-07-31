@@ -18,16 +18,19 @@ import omg.jd.tvmazeapiclient.utils.loadUrl
 class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), MVPDetails.View {
     companion object {
         const val EXTRA_TVSHOW = "EXTRA_TVSHOW"
+        const val EXTRA_CONTAINS_EPISODES = "EXTRA_CONTAINS_EPISODES"
     }
 
     override var presenter: MVPDetails.Presenter? = null
     lateinit var tvShow: TvShow
+    var withEpisodes: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
         tvShow = intent.extras.getParcelable<TvShow>(EXTRA_TVSHOW)
+        withEpisodes = intent.extras.getBoolean(EXTRA_CONTAINS_EPISODES)
 
         initToolbar()
         initViews()
@@ -84,7 +87,7 @@ class DetailsActivity : BaseActivity<MVPDetails.View, MVPDetails.Presenter>(), M
 
     override fun onLoadFinished(loader: Loader<MVPDetails.Presenter>?, presenter: MVPDetails.Presenter) {
         super.onLoadFinished(loader, presenter)
-        presenter.onInit(tvShow)
+        presenter.onInit(tvShow, withEpisodes)
     }
 
     override fun loadImageHeader(imageUrl: String?) {

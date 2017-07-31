@@ -1,7 +1,6 @@
 package omg.jd.tvmazeapiclient.components.main
 
 import android.view.View
-import com.nhaarman.mockito_kotlin.mock
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
 import omg.jd.tvmazeapiclient.components.main.recyclerview.MainItemViewHolder
 import omg.jd.tvmazeapiclient.entity.EntityUtils
@@ -49,13 +48,19 @@ class MainPresenterTest {
     }
 
     @Test
+    fun testOnStartSearchComponent() {
+        presenter.onStartSearchComponentClicked()
+        verify(view).startSearchComponent()
+    }
+
+    @Test
     fun testSortBy() {
         val sortBy = EntityUtils.SORT_BY.NEXT_EPISODE
         val showList: List<TvShow> = listOf()
         `when`(interactor.sortBy).thenReturn(sortBy)
         `when`(interactor.sortShowList(sortBy)).thenReturn(showList)
 
-        presenter.sortBy(sortBy)
+        presenter.onSortByClicked(sortBy)
 
         verify(view).setShows(showList)
         verify(view).checkSortBy(sortBy)
@@ -70,6 +75,12 @@ class MainPresenterTest {
         presenter.onItemClick(viewHolder)
 
         verify(view).showDetails(viewHolder.data as TvShow, viewHolder.transitedView)
+    }
+
+    @Test
+    fun testOnReset() {
+        presenter.onReset()
+        verify(interactor).destroy()
     }
 
 }

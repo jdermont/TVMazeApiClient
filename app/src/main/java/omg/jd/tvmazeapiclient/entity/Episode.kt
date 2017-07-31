@@ -18,8 +18,7 @@ data class Episode(val id: Long = 0,
                    val runtime: Int = 0,
                    val mediumImage: String?,
                    val originalImage: String?,
-                   val summary: String?,
-                   val links: Links?) : Parcelable, Comparable<Episode> {
+                   val summary: String?) : Parcelable, Comparable<Episode> {
 
     companion object {
         @JvmField val CREATOR = PaperParcelEpisode.CREATOR

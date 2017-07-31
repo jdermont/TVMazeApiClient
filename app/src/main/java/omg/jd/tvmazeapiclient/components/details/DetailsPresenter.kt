@@ -1,5 +1,6 @@
 package omg.jd.tvmazeapiclient.components.details
 
+import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -12,8 +13,8 @@ import org.joda.time.DateTime
 class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Presenter {
     override var view: MVPDetails.View? = null
 
-    override fun onInit(tvShow: TvShow) {
-        interactor.setTvShowIfNeeded(tvShow)
+    override fun onInit(tvShow: TvShow, withEpisodes: Boolean) {
+        interactor.setTvShowIfNeeded(tvShow,withEpisodes)
         view?.loadImageHeader(interactor.tvShow.originalImage)
         view?.setupViews(interactor.tvShow)
 
@@ -34,9 +35,16 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    view?.writeEpisodes(it.first,it.second)
-                }
+                .subscribe(
+                        { // onNext
+                            view?.writeEpisodes(it.first,it.second)
+                        },
+                        { // onError
+                            it.printStackTrace()
+                        },
+                        { // onComplete
+                        }
+                )
     }
 
     override fun onFabClicked(tvShowInDB: MainDatabase.TvShowInDB) {

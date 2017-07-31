@@ -1,7 +1,6 @@
 package omg.jd.tvmazeapiclient.ws.model
 
 import omg.jd.tvmazeapiclient.entity.Episode
-import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
 import omg.jd.tvmazeapiclient.entity.TvShow
 
@@ -24,7 +23,6 @@ fun WsShow.convertToTvShowEntity(): TvShow {
             originalImage = this.image?.original,
             summary = this.summary,
             updated = this.updated,
-            links = this.links?.convertToLinksEntity(),
             episodes = this.embedded?.convertToEpisodesListEntity() ?: listOf())
 }
 
@@ -34,12 +32,6 @@ fun WsNetwork.convertToNetworkEntity(): Network {
             countryCode = this.country?.code,
             countryName = this.country?.name,
             countryTimezone = this.country?.timezone)
-}
-
-fun LinksDbFlow.convertToLinksEntity(): Links {
-    return Links(self = this.self,
-            previousepisode = this.previousepisode,
-            nextepisode = this.nextepisode)
 }
 
 fun WsEpisode.convertToEpisodeEntity(): Episode {
@@ -54,8 +46,7 @@ fun WsEpisode.convertToEpisodeEntity(): Episode {
             runtime = this.runtime,
             mediumImage = this.image?.medium,
             originalImage = this.image?.original,
-            summary = this.summary,
-            links = this.links?.convertToLinksEntity())
+            summary = this.summary)
 }
 
 fun WsEmbedded.convertToEpisodesListEntity(): List<Episode> {

@@ -1,11 +1,9 @@
 package omg.jd.tvmazeapiclient.utils
 
 import omg.jd.tvmazeapiclient.entity.Episode
-import omg.jd.tvmazeapiclient.entity.Links
 import omg.jd.tvmazeapiclient.entity.Network
 import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.ws.model.WsEpisode
-import omg.jd.tvmazeapiclient.ws.model.LinksDbFlow
 import omg.jd.tvmazeapiclient.ws.model.WsNetwork
 import org.junit.Assert
 import org.junit.Test
@@ -36,7 +34,6 @@ class WsEntityConverterTest {
         Assert.assertEquals(wsTVShow.image?.original, tvShow.originalImage)
         Assert.assertEquals(wsTVShow.summary, tvShow.summary)
         Assert.assertEquals(wsTVShow.updated, tvShow.updated)
-        assertLinksEquals(wsTVShow.links!!, tvShow.links!!)
         for (i in 0..wsTVShow.embedded?.episodes!!.size-1) {
             assertEpisodeEquals(wsTVShow.embedded?.episodes!![i],tvShow.episodes[i])
         }
@@ -48,12 +45,6 @@ class WsEntityConverterTest {
         Assert.assertEquals(wsNetwork.country?.code, network.countryCode)
         Assert.assertEquals(wsNetwork.country?.name, network.countryName)
         Assert.assertEquals(wsNetwork.country?.timezone, network.countryTimezone)
-    }
-
-    private fun assertLinksEquals(wsLinks: LinksDbFlow, links: Links) {
-        Assert.assertEquals(wsLinks.self, links.self)
-        Assert.assertEquals(wsLinks.previousepisode, links.previousepisode)
-        Assert.assertEquals(wsLinks.nextepisode, links.nextepisode)
     }
 
     private fun assertEpisodeEquals(wsEpisode: WsEpisode, episode: Episode) {
@@ -69,6 +60,5 @@ class WsEntityConverterTest {
         Assert.assertEquals(wsEpisode.image?.medium, episode.mediumImage)
         Assert.assertEquals(wsEpisode.image?.original, episode.originalImage)
         Assert.assertEquals(wsEpisode.summary, episode.summary)
-        assertLinksEquals(wsEpisode.links!!,episode.links!!)
     }
 }

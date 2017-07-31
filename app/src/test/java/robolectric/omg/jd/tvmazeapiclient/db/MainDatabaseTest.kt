@@ -28,7 +28,6 @@ class MainDatabaseTest {
     fun saveTvShowTest() {
         val tvShow = createShow().convertToTvShowEntity()
         MainDatabase.saveTvShow(tvShow).subscribe()
-        Assert.assertEquals(true,MainDatabase.dbChanged)
 
         val showList = MainDatabase.loadShowList().blockingFirst()
         Assert.assertEquals(1,showList.size)

@@ -30,7 +30,7 @@ abstract class BaseActivity<V : BaseView, P : BasePresenter<V>> : AppCompatActiv
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter?.onDestroyed()
+        presenter?.onViewDestroyed()
     }
 
 }

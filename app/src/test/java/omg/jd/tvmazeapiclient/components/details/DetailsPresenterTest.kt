@@ -55,9 +55,9 @@ class DetailsPresenterTest {
         `when`(interactor.retrieveEpisodes()).thenReturn(episodesObservable)
         val existsInDbObservable = Observable.just(MainDatabase.TvShowInDB.NOT_IN_DB)
         `when`(interactor.checkForTvShowInDB()).thenReturn(existsInDbObservable)
-        presenter.onInit(tvShow)
+        presenter.onInit(tvShow,false)
 
-        verify(interactor).setTvShowIfNeeded(tvShow)
+        verify(interactor).setTvShowIfNeeded(tvShow,false)
         verify(view).loadImageHeader(tvShow.originalImage)
         verify(view).setupViews(tvShow)
     }

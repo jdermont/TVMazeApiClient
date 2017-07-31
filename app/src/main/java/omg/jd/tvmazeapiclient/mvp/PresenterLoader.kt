@@ -2,6 +2,7 @@ package omg.jd.tvmazeapiclient.mvp
 
 import android.content.Context
 import android.support.v4.content.Loader
+import android.util.Log
 
 class PresenterLoader<T : BasePresenter<*>>(context: Context, private val factory: PresenterFactory<T>) : Loader<T>(context) {
     private var presenter: T? = null
@@ -24,7 +25,7 @@ class PresenterLoader<T : BasePresenter<*>>(context: Context, private val factor
     }
 
     override fun onReset() {
-        presenter?.onDestroyed()
+        presenter?.onReset()
         presenter = null
     }
 }

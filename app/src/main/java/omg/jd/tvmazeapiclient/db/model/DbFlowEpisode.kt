@@ -17,8 +17,6 @@ data class DbFlowEpisode(@PrimaryKey(autoincrement = false) @Column(name = "id")
                          @Column(name = "mediumImage") var mediumImage: String?,
                          @Column(name = "originalImage") var originalImage: String?,
                          @Column(name = "summary") var summary: String?,
-                         @ForeignKey(tableClass = DbFlowLinks::class, saveForeignKeyModel = true, deleteForeignKeyModel = true)
-                   var links: DbFlowLinks?,
                          @ForeignKey(saveForeignKeyModel = false, stubbedRelationship = true, onDelete = ForeignKeyAction.CASCADE)
                    var tvShow: DbFlowTvShow? = null) : BaseModel() {
 

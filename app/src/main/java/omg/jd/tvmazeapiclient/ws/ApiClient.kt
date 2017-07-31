@@ -2,10 +2,8 @@ package omg.jd.tvmazeapiclient.ws
 
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
-import omg.jd.tvmazeapiclient.ws.model.LinksDbFlow
 import omg.jd.tvmazeapiclient.ws.model.WsShow
 import omg.jd.tvmazeapiclient.ws.model.WsTVShow
-import omg.jd.tvmazeapiclient.ws.model.deserializers.LinksDeserializer
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,7 +15,6 @@ object ApiClient {
 
     init {
         val gsonBuilder = GsonBuilder()
-        gsonBuilder.registerTypeAdapter(LinksDbFlow::class.java, LinksDeserializer())
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)

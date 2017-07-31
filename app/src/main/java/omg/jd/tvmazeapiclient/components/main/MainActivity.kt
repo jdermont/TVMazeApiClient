@@ -53,16 +53,18 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_search_for_tvshow -> {
-                val intent = Intent(applicationContext,SearchActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.action_sort_by_default -> presenter?.sortBy(SORT_BY.DEFAULT)
-            R.id.action_sort_by_premiered -> presenter?.sortBy(SORT_BY.PREMIERED)
-            R.id.action_sort_by_next_episode -> presenter?.sortBy(SORT_BY.NEXT_EPISODE)
+            R.id.action_search_for_tvshow -> presenter?.onStartSearchComponentClicked()
+            R.id.action_sort_by_default -> presenter?.onSortByClicked(SORT_BY.DEFAULT)
+            R.id.action_sort_by_premiered -> presenter?.onSortByClicked(SORT_BY.PREMIERED)
+            R.id.action_sort_by_next_episode -> presenter?.onSortByClicked(SORT_BY.NEXT_EPISODE)
             else -> { }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun startSearchComponent() {
+        val intent = Intent(applicationContext,SearchActivity::class.java)
+        startActivity(intent)
     }
 
     override fun checkSortBy(sortBy: SORT_BY) {
@@ -108,7 +110,8 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
 
     override fun showDetails(show: TvShow, transitedView: View) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, show)
+        intent.putExtra(DetailsActivity.EXTRA_TVSHOW, show.copy(episodes = listOf()))
+        intent.putExtra(DetailsActivity.EXTRA_CONTAINS_EPISODES, !show.episodes.isEmpty())
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
         startActivity(intent, options.toBundle())
     }

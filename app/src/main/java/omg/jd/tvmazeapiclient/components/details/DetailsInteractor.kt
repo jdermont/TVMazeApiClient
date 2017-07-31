@@ -1,11 +1,9 @@
 package omg.jd.tvmazeapiclient.components.details
 
-import com.raizlabs.android.dbflow.sql.language.SQLite
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.db.MainDatabase.TvShowInDB
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow
-import omg.jd.tvmazeapiclient.db.model.DbFlowTvShow_Table
+import omg.jd.tvmazeapiclient.entity.Episode
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.ws.ApiClient
 import omg.jd.tvmazeapiclient.ws.model.convertToEpisodesListEntity
@@ -19,8 +17,13 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     private var tvShowInDB: TvShowInDB? = null
 
-    override fun setTvShowIfNeeded(tvShow: TvShow) {
+    override fun setTvShowIfNeeded(tvShow: TvShow, withEpisodes: Boolean) {
         if (cachedTvShow == null) {
+            if (withEpisodes) {
+                val episodes: List<Episode> = MainDatabase.loadShowEpisodes(tvShow)
+                tvShow.episodes = episodes
+                tvShowInDB = TvShowInDB.IN_DB
+            }
             cachedTvShow = tvShow
         }
     }
@@ -28,10 +31,7 @@ class DetailsInteractor : MVPDetails.Interactor {
     override fun checkForTvShowInDB(): Observable<TvShowInDB> {
         return Observable.fromCallable {
             if (tvShowInDB == null) {
-                val inDb = SQLite.select().from(DbFlowTvShow::class.java)
-                        .where(DbFlowTvShow_Table.id.eq(tvShow.id))
-                        .querySingle() != null
-                tvShowInDB = MainDatabase.TvShowInDB.valueOf(inDb)
+                tvShowInDB = MainDatabase.checkIfInDatabase(tvShow)
             }
             tvShowInDB
         }
@@ -39,19 +39,25 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     override fun retrieveEpisodes(): Observable<TvShow> {
         val cachedTvShow: TvShow = this.cachedTvShow ?: throw IllegalStateException("tvShow in interactor is null")
-        val observable =
-                if (cachedTvShow.episodes.isNotEmpty()) {
-                    Observable.fromCallable { cachedTvShow }
-                } else {
-                    ApiClient.retrieveTVShow(tvShow.id.toString())
-                            .map {
-                                if (it.embedded != null) {
-                                    cachedTvShow.episodes = it.embedded.convertToEpisodesListEntity()
-                                }
-                                cachedTvShow
-                            }
+        val wsObservable = ApiClient.retrieveTVShow(tvShow.id.toString())
+                .map {
+                    if (it.embedded != null) {
+                        cachedTvShow.episodes = it.embedded.convertToEpisodesListEntity()
+                    }
+                    cachedTvShow
                 }
-        return observable
+                .doOnNext {
+                    if (tvShowInDB == TvShowInDB.IN_DB) {
+                        saveTvShow()
+                    }
+                }
+
+        if (cachedTvShow.episodes.isNotEmpty()) {
+            val cacheObservable = Observable.fromCallable { cachedTvShow }
+            return Observable.mergeDelayError<TvShow>(cacheObservable,wsObservable)
+        } else {
+            return wsObservable
+        }
     }
 
     override fun saveTvShow(): Observable<TvShowInDB> {
