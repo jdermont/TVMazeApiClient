@@ -30,6 +30,9 @@
             android:name=".components.details.DetailsActivity"
             android:theme="@style/AppThemeDetails">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${fabricApiKey}" />
     </application>
 
 </manifest>
