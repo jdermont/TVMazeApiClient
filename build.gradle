@@ -7,7 +7,13 @@ buildscript {
         paperparcel_version = '2.0.1'
         dbflow_version = '4.0.4'
 
-        fabricApiKey = new File('../fabricApiKey.txt').text
+        fabricFile = new File('../fabricApiKey.txt')
+        if (fabricFile.exists()) {
+            fabricApiKey = fabricFile.text
+        } else {
+            fabricApiKey = "0000000000000000000000000000000000000000"
+        }
+
     }
 
     repositories {
