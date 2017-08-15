@@ -1,4 +1,4 @@
-package omg.jd.tvmazeapiclient
+package omg.jd.tvmazeapiclient.components.settings
 
 import android.content.SharedPreferences
 import omg.jd.tvmazeapiclient.entity.EntityUtils

@@ -17,6 +17,7 @@ import omg.jd.tvmazeapiclient.R
 import omg.jd.tvmazeapiclient.components.details.DetailsActivity
 import omg.jd.tvmazeapiclient.components.main.recyclerview.MainItemsAdapter
 import omg.jd.tvmazeapiclient.components.search.SearchActivity
+import omg.jd.tvmazeapiclient.components.settings.SettingsActivity
 import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
@@ -57,6 +58,7 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
             R.id.action_sort_by_default -> presenter?.onSortByClicked(SORT_BY.DEFAULT)
             R.id.action_sort_by_premiered -> presenter?.onSortByClicked(SORT_BY.PREMIERED)
             R.id.action_sort_by_next_episode -> presenter?.onSortByClicked(SORT_BY.NEXT_EPISODE)
+            R.id.action_settings -> presenter?.onSettingsClicked()
             else -> { }
         }
         return super.onOptionsItemSelected(item)
@@ -114,5 +116,10 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
         intent.putExtra(DetailsActivity.EXTRA_CONTAINS_EPISODES, !show.episodes.isEmpty())
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitedView, getString(R.string.transition_image))
         startActivity(intent, options.toBundle())
+    }
+
+    override fun startSettingsComponent() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 }

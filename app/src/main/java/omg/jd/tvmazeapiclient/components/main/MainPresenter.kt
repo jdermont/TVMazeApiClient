@@ -43,4 +43,8 @@ class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
     override fun onReset() {
         interactor.destroy()
     }
+
+    override fun onSettingsClicked() {
+        view?.startSettingsComponent()
+    }
 }

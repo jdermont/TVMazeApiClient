@@ -25,6 +25,7 @@ interface MVPMain {
         fun onStartSearchComponentClicked()
         fun onSortByClicked(sortBy: EntityUtils.SORT_BY)
         fun onItemClick(viewHolder: TvShowViewHolder)
+        fun onSettingsClicked()
     }
 
     interface View : BaseView {
@@ -34,5 +35,6 @@ interface MVPMain {
         fun startSearchComponent()
         fun checkSortBy(sortBy: EntityUtils.SORT_BY)
         fun showDetails(show: TvShow, transitedView: android.view.View)
+        fun startSettingsComponent()
     }
 }

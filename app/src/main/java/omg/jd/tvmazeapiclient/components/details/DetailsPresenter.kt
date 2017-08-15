@@ -28,7 +28,7 @@ class DetailsPresenter(val interactor: MVPDetails.Interactor) : MVPDetails.Prese
         interactor.retrieveEpisodes()
                 .map {
                     val now = DateTime.now()
-                    val latestEpisode = it.episodes.lastOrNull { it.datetime <= now }
+                    val latestEpisode = it.episodes.lastOrNull { it.datetime != DateTimeUtils.INVALID_DATETIME && it.datetime <= now }
                     val nextEpisode = it.episodes.firstOrNull { it.datetime > now }
                     val str = if (nextEpisode == null) "" else " (${DateTimeUtils.getDateString(nextEpisode.datetime)})"
                     Pair(StringUtils.makeEpisodeNumber(latestEpisode),StringUtils.makeEpisodeNumber(nextEpisode)+str)

@@ -1,15 +1,14 @@
 package omg.jd.tvmazeapiclient.components.main
 
 import android.content.SharedPreferences
-import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.EntityUtils
 import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
-import omg.jd.tvmazeapiclient.getSortBy
-import omg.jd.tvmazeapiclient.putSortBy
+import omg.jd.tvmazeapiclient.components.settings.getSortBy
+import omg.jd.tvmazeapiclient.components.settings.putSortBy
 
 class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
 
