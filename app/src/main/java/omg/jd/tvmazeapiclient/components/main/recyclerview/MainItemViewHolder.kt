@@ -29,7 +29,7 @@ class MainItemViewHolder(itemView: View, clickListener: ViewHolderOnClickListene
         itemView.mainItemImage.loadUrl(tvShow.originalImage, R.drawable.placeholder)
         itemView.mainItemTitle.text = tvShow.name
         val now = DateTime.now()
-        val latestEpisode = tvShow.episodes.lastOrNull { it.datetime <= now }
+        val latestEpisode = tvShow.episodes.lastOrNull { it.datetime != DateTimeUtils.INVALID_DATETIME && it.datetime <= now }
         val nextEpisode = tvShow.episodes.firstOrNull { it.datetime > now }
         val str = if (nextEpisode == null) "" else " (${DateTimeUtils.getDateString(nextEpisode.datetime)})"
         itemView.mainItemDescription.text = resources.getString(

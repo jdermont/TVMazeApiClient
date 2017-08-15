@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.db.model
 
 import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.sql.language.OrderBy
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.raizlabs.android.dbflow.structure.BaseModel
 import omg.jd.tvmazeapiclient.db.dbflow.TvMazeDatabase
@@ -36,9 +37,9 @@ data class DbFlowTvShow(@PrimaryKey(autoincrement = false) @Column(name = "id") 
         @OneToMany(methods = arrayOf(OneToMany.Method.ALL), isVariablePrivate = true, variableName = "episodes")
         get() {
             if (_episodes == null) {
-                //_episodes = listOf()
                 _episodes = SQLite.select().from(DbFlowEpisode::class.java)
                         .where(DbFlowEpisode_Table.tvShow_id.eq(this.id))
+                        .orderBy(DbFlowEpisode_Table.airstamp, true)
                         .queryList()
                 _episodes?.forEach { it.tvShow = this }
             }
