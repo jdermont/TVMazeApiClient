@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference android:title="Your Name"
-                        android:key="username"
-                        android:summary="Please provide your username" />
-    <CheckBoxPreference android:title="Application Updates"
-                        android:defaultValue="false"
-                        android:summary="This option if selected will allow the application to check for latest versions."
-                        android:key="applicationUpdates" />
+    <PreferenceCategory android:title="Notification">
+        <CheckBoxPreference
+            android:title="Enable notifications"
+            android:defaultValue="true"
+            android:key="KEY_NOTIFICATION" />
+        <CheckBoxPreference
+            android:title="Enable vibration"
+            android:defaultValue="true"
+            android:key="KEY_NOTIFICATION_ENABLE_VIBRATION" />
+        <CheckBoxPreference
+            android:title="Enable sound"
+            android:defaultValue="false"
+            android:key="KEY_NOTIFICATION_ENABLE_SOUND" />
+        <Preference
+            android:title="Notification sound"
+            android:key="KEY_NOTIFICATION_SOUND"
+            android:defaultValue=""/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Refresh">
+        <CheckBoxPreference
+            android:title="Refresh in background"
+            android:key="KEY_REFRESH_IN_BACKGROUND"
+            android:summary="Periodically refresh data when app is in background"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="Refresh only when WiFi"
+            android:key="KEY_REFRESH_WIFI_ONLY"
+            android:summary="Don't use mobile data to update"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
 </PreferenceScreen>
