@@ -16,6 +16,7 @@ interface MVPMain {
         fun loadFromDbShowList(): Observable<List<TvShow>>
         fun sortShowList(sortBy: EntityUtils.SORT_BY): List<TvShow>
         fun getShowList(): List<TvShow>
+        fun updateShowList(showList: List<TvShow>): Observable<List<TvShow>>
         fun destroy()
     }
 

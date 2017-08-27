@@ -42,6 +42,25 @@ object MainDatabase {
         }
     }
 
+    fun updateTvShow(tvShow: TvShow): Observable<TvShowInDB> {
+        return Observable.fromCallable {
+            val tvShowFromDb = loadShow(tvShow)
+            if (tvShowFromDb.updated > tvShow.updated) {
+                val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
+                tvShowDbFlow.saveInTransation()
+                dbChangedSubject.onNext(SUBJECT)
+            }
+            TvShowInDB.IN_DB
+        }
+    }
+
+    private fun loadShow(tvShow: TvShow): DbFlowTvShow {
+        return SQLite.select()
+                .from(DbFlowTvShow::class.java)
+                .where(DbFlowTvShow_Table.id.eq(tvShow.id))
+                .querySingle()!!
+    }
+
     fun loadShowList(): Observable<List<TvShow>> {
         return Observable.fromCallable {
             SQLite.select()

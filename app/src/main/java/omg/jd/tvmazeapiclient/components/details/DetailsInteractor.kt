@@ -48,7 +48,7 @@ class DetailsInteractor : MVPDetails.Interactor {
                 }
                 .doOnNext {
                     if (tvShowInDB == TvShowInDB.IN_DB) {
-                        saveTvShow()
+                        updateTvShow()
                     }
                 }
 
@@ -67,6 +67,11 @@ class DetailsInteractor : MVPDetails.Interactor {
 
     override fun deleteTvShow(): Observable<TvShowInDB> {
         return MainDatabase.deleteTvShow(tvShow)
+                .doOnNext { tvShowInDB = it }
+    }
+
+    private fun updateTvShow(): Observable<TvShowInDB> {
+        return MainDatabase.updateTvShow(tvShow)
                 .doOnNext { tvShowInDB = it }
     }
 

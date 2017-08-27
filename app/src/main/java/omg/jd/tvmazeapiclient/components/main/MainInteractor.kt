@@ -9,6 +9,8 @@ import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
 import omg.jd.tvmazeapiclient.components.settings.getSortBy
 import omg.jd.tvmazeapiclient.components.settings.putSortBy
+import omg.jd.tvmazeapiclient.ws.ApiClient
+import omg.jd.tvmazeapiclient.ws.model.convertToEpisodesListEntity
 
 class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
 
@@ -38,6 +40,38 @@ class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
 
     override fun getShowList(): List<TvShow> {
         return cachedShowList
+    }
+
+    override fun updateShowList(showList: List<TvShow>): Observable<List<TvShow>> {
+        return Observable.just(showList)
+                .doOnNext {
+                    it.forEach {
+                        retrieveEpisodes(it).subscribe(
+                                { // onNext
+                                },
+                                { // onError
+                                    it.printStackTrace()
+                                },
+                                { // onComplete
+                                    updateTvShow(it)
+                                }
+                        )
+                    }
+                }
+    }
+
+    private fun retrieveEpisodes(show: TvShow): Observable<TvShow> {
+        return ApiClient.retrieveTVShow(show.id.toString())
+                .map {
+                    if (it.embedded != null) {
+                        show.episodes = it.embedded.convertToEpisodesListEntity()
+                    }
+                    show
+                }
+    }
+
+    private fun updateTvShow(show: TvShow) {
+        MainDatabase.updateTvShow(show).subscribe()
     }
 
     override fun destroy() {

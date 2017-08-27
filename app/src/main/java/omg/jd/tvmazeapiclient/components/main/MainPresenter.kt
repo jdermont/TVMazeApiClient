@@ -13,6 +13,7 @@ class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
         if (interactor.needToReload) {
             view?.setLoading()
             interactor.loadFromDbShowList()
+                    .doOnNext { updateShowList(it) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
@@ -46,5 +47,14 @@ class MainPresenter(val interactor: MVPMain.Interactor) : MVPMain.Presenter {
 
     override fun onSettingsClicked() {
         view?.startSettingsComponent()
+    }
+
+    private fun updateShowList(showList: List<TvShow>) {
+        interactor.updateShowList(showList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    view?.setShows(it)
+                }
     }
 }
