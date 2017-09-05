@@ -16,6 +16,8 @@ fun SharedPreferences.areNotificationsEnabled(): Boolean = getBoolean("KEY_NOTIF
 
 fun SharedPreferences.isRefreshEnabled(): Boolean = getBoolean("KEY_REFRESH_IN_BACKGROUND", true)
 
+fun SharedPreferences.isRefreshWithWifiOnly(): Boolean = getBoolean("KEY_REFRESH_WIFI_ONLY", true)
+
 fun SharedPreferences.setNotificationSound(sound: String?) {
     edit().putString("KEY_NOTIFICATION_SOUND", sound).apply()
 }

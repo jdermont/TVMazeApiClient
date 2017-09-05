@@ -36,6 +36,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="${fabricApiKey}" />
+        <service
+            android:exported="true"
+            android:name=".job.update.UpdateDataService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

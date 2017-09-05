@@ -15,6 +15,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
+import omg.jd.tvmazeapiclient.job.JobUtil
 import java.io.File
 
 
@@ -24,12 +25,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     lateinit var prefs: SharedPreferences
+    private val onPrefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+        when (key) {
+            "KEY_REFRESH_IN_BACKGROUND",
+            "KEY_REFRESH_WIFI_ONLY" -> JobUtil.rescheduleUpdateDataJob(context)
+        }
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
         prefs = preferenceManager.sharedPreferences
         setupNotificationPreferences()
         setupRefreshPreferences()
+        prefs.registerOnSharedPreferenceChangeListener(onPrefChangeListener)
+    }
+
+    override fun onDestroy() {
+        prefs.unregisterOnSharedPreferenceChangeListener(onPrefChangeListener)
+        super.onDestroy()
     }
 
     private fun setupNotificationPreferences() {

@@ -6,8 +6,6 @@ import com.raizlabs.android.dbflow.config.FlowManager
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
 
-
-
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()

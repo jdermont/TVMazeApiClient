@@ -84,4 +84,13 @@ object MainDatabase {
                 .count() > 0
         return MainDatabase.TvShowInDB.valueOf(inDb)
     }
+
+    fun loadShowIdList(): Observable<List<Long>> {
+        return Observable.fromCallable {
+            SQLite.select(DbFlowTvShow_Table::id.get())
+                    .from(DbFlowTvShow::class.java)
+                    .queryList()
+        }
+                .map { it.map { it.id } }
+    }
 }

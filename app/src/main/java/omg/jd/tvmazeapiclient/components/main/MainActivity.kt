@@ -20,8 +20,10 @@ import omg.jd.tvmazeapiclient.components.search.SearchActivity
 import omg.jd.tvmazeapiclient.components.settings.SettingsActivity
 import omg.jd.tvmazeapiclient.entity.EntityUtils.SORT_BY
 import omg.jd.tvmazeapiclient.entity.TvShow
+import omg.jd.tvmazeapiclient.job.JobUtil
 import omg.jd.tvmazeapiclient.mvp.PresenterLoader
 import omg.jd.tvmazeapiclient.recyclerview.TvShowViewHolder
+
 
 class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.View, TvShowViewHolder.ViewHolderOnClickListener {
     override var presenter: MVPMain.Presenter? = null
@@ -32,6 +34,7 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        JobUtil.rescheduleUpdateDataJob(applicationContext)
         setContentView(R.layout.activity_main)
         setSupportActionBar(mainToolbar)
 
