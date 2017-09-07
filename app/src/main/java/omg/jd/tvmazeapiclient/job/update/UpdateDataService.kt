@@ -4,6 +4,7 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.Intent
 import android.util.Log
+import omg.jd.tvmazeapiclient.job.JobUtil
 
 class UpdateDataService : JobService(), MVPUpdate.View {
     companion object {
@@ -37,6 +38,7 @@ class UpdateDataService : JobService(), MVPUpdate.View {
     }
 
     override fun finishJob(job: JobParameters?) {
+        JobUtil.rescheduleUpdateDataJob(applicationContext)
         jobFinished(job,false)
     }
 }

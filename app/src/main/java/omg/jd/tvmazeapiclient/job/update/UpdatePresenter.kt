@@ -1,7 +1,6 @@
 package omg.jd.tvmazeapiclient.job.update
 
 import android.app.job.JobParameters
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -20,6 +19,6 @@ class UpdatePresenter(val view: MVPUpdate.View,
     }
 
     override fun onStopJob(job: JobParameters?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // stub, not used?
     }
 }

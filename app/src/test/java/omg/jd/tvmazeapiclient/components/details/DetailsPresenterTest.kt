@@ -1,14 +1,13 @@
 package omg.jd.tvmazeapiclient.components.details
 
 import com.nhaarman.mockito_kotlin.verify
-import com.raizlabs.android.dbflow.kotlinextensions.delete
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.RxAndroidSchedulersOverrideRule
 import omg.jd.tvmazeapiclient.db.MainDatabase
-import omg.jd.tvmazeapiclient.ws.model.convertToEpisodeEntity
-import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import omg.jd.tvmazeapiclient.utils.createEpisode
 import omg.jd.tvmazeapiclient.utils.createShow
+import omg.jd.tvmazeapiclient.ws.model.convertToEpisodeEntity
+import omg.jd.tvmazeapiclient.ws.model.convertToTvShowEntity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

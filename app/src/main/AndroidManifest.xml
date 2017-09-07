@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".MainApplication"
@@ -30,16 +31,27 @@
             android:name=".components.details.DetailsActivity"
             android:theme="@style/AppThemeDetails">
         </activity>
-        <activity
-            android:name=".components.settings.SettingsActivity">
+        <activity android:name=".components.settings.SettingsActivity">
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${fabricApiKey}" />
+            android:value="${fabricApiKey}"/>
+
         <service
-            android:exported="true"
             android:name=".job.update.UpdateDataService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service  android:name=".job.BootService" />
+
+        <receiver
+            android:name=".job.BootReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
