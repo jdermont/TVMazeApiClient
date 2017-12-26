@@ -1,6 +1,7 @@
 package omg.jd.tvmazeapiclient.job.update
 
 import android.util.Log
+import com.raizlabs.android.dbflow.kotlinextensions.save
 import io.reactivex.Observable
 import omg.jd.tvmazeapiclient.db.MainDatabase
 import omg.jd.tvmazeapiclient.entity.TvShow
@@ -18,9 +19,16 @@ class UpdateInteractor : MVPUpdate.Interactor {
 
     override fun updateShow(showId: Long) {
         Log.d(TAG, "updateShow $showId begin")
-        retrieveShow(showId).subscribe {
-            MainDatabase.saveTvShow(it)
-        }
+        retrieveShow(showId).subscribe(
+                { // onNext
+                    MainDatabase.saveTvShow(it)
+                },
+                { // onError
+                    it.printStackTrace()
+                },
+                { // onComplete
+                }
+        )
         Log.d(TAG, "updateShow $showId end")
     }
 

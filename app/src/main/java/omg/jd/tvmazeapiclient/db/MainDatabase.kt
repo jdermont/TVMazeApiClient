@@ -44,8 +44,8 @@ object MainDatabase {
 
     fun updateTvShow(tvShow: TvShow): Observable<TvShowInDB> {
         return Observable.fromCallable {
-            val tvShowFromDb = loadShow(tvShow)
-            if (tvShowFromDb.updated > tvShow.updated) {
+            val tvShowFromDb = loadShow(tvShow).convertToTvShowEntity()
+            if (tvShowFromDb != tvShow) {
                 val tvShowDbFlow = tvShow.convertToTvShowDbFlow()
                 tvShowDbFlow.saveInTransation()
                 dbChangedSubject.onNext(SUBJECT)
@@ -75,6 +75,16 @@ object MainDatabase {
                 .where(DbFlowEpisode_Table.tvShow_id.eq(tvShow.id))
                 .queryList()
                 .map { it.convertToEpisodeEntity() }
+    }
+
+    fun loadShowSingle(tvShowId: Long): Observable<TvShow> {
+        return Observable.fromCallable {
+            SQLite.select()
+                    .from(DbFlowTvShow::class.java)
+                    .where(DbFlowTvShow_Table.id.eq(tvShowId))
+                    .querySingle()!!
+        }
+                .map { it.convertToTvShowEntity() }
     }
 
     fun checkIfInDatabase(tvShow: TvShow): TvShowInDB {

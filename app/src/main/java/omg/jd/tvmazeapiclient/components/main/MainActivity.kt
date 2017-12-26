@@ -73,11 +73,10 @@ class MainActivity : BaseActivity<MVPMain.View, MVPMain.Presenter>(), MVPMain.Vi
     }
 
     override fun checkSortBy(sortBy: SORT_BY) {
-        val itemId: Int
-        when (sortBy) {
-            SORT_BY.DEFAULT -> itemId = R.id.action_sort_by_default
-            SORT_BY.PREMIERED -> itemId = R.id.action_sort_by_premiered
-            SORT_BY.NEXT_EPISODE -> itemId = R.id.action_sort_by_next_episode
+        val itemId: Int = when (sortBy) {
+            SORT_BY.DEFAULT -> R.id.action_sort_by_default
+            SORT_BY.PREMIERED -> R.id.action_sort_by_premiered
+            SORT_BY.NEXT_EPISODE -> R.id.action_sort_by_next_episode
         }
         val item: MenuItem? = menu?.findItem(itemId)
         item?.isChecked = true

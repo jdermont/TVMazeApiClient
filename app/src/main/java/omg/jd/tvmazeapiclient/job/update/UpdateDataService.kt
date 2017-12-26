@@ -16,16 +16,6 @@ class UpdateDataService : JobService(), MVPUpdate.View {
         UpdatePresenter(this, interactor)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        Log.d(TAG,"onCreate")
-    }
-
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.d(TAG,"onStartCommand")
-        return START_NOT_STICKY
-    }
-
     override fun onStartJob(job: JobParameters?): Boolean {
         Log.d(TAG,"onStartJob")
         presenter.onStartJob(job)

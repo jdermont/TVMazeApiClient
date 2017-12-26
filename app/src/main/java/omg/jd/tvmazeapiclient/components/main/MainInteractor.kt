@@ -48,12 +48,12 @@ class MainInteractor(val pref: SharedPreferences) : MVPMain.Interactor {
                     it.forEach {
                         retrieveEpisodes(it).subscribe(
                                 { // onNext
+                                    updateTvShow(it)
                                 },
                                 { // onError
                                     it.printStackTrace()
                                 },
                                 { // onComplete
-                                    updateTvShow(it)
                                 }
                         )
                     }
